@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "58460147939",
+    "project_id": "finalstandin",
+    "storage_bucket": "finalstandin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58460147939:android:49767f48330d155ca235d6",
+        "android_client_info": {
+          "package_name": "com.example.finalstandin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIe3emiwVoc2KblYX-6jwIdMWpOJDdQYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
