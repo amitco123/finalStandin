@@ -4,11 +4,12 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 public class Order {
-    private String address,  name, date,  tol,oot,fos,thereason, phone,gender, time,how_much_time, birth , price;
+    private String address ,adress2,  name, date,  tol,oot,fos,thereason, phone,gender, time,how_much_time, birth , price;
     public Bitmap bitmap;
 
-    public Order(String address, String name, String date, String tol, String oot, String fos, String thereason, String phone, String gender, String time, String how_much_time, String birth, String price, Bitmap bitmap) {
+    public Order(String address, String adress2, String name, String date, String tol, String oot, String fos, String thereason, String phone, String gender, String time, String how_much_time, String birth, String price, Bitmap bitmap) {
         this.address = address;
+        this.adress2 = adress2;
         this.name = name;
         this.date = date;
         this.tol = tol;
@@ -30,6 +31,14 @@ public class Order {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getAdress2() {
+        return adress2;
+    }
+
+    public void setAdress2(String adress2) {
+        this.adress2 = adress2;
     }
 
     public String getName() {
@@ -134,10 +143,5 @@ public class Order {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
-    }
-
-    public String toString()
-    {
-        return name + " " + phone;
     }
 }

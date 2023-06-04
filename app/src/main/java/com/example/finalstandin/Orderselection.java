@@ -71,7 +71,7 @@ public class Orderselection extends AppCompatActivity {
     AutoCompleteTextView autoCompleteTextView;
     FirebaseAuth mAuth;
     boolean flag;
-    String sendaddress, Time, RdbToL, RdbFoS, RdbOoT, sendloc1, senddate, st9, sendhowmuchtime, user1;
+    String sendaddress, Time, RdbToL, RdbFoS, RdbOoT, sendloc1, sendloc = "", senddate, st9, sendhowmuchtime, user1;
     private DatabaseReference databaseReference;
     FirebaseFirestore firestore;
     String name = " aba", birth, gender;
@@ -261,7 +261,29 @@ public class Orderselection extends AppCompatActivity {
                 }
             }
         });
+        rgBtnGroupPlace.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rbAnother: {
+                        flag = true;
+                        address.setVisibility(View.INVISIBLE);
+                        loc.setVisibility(View.VISIBLE);
+                        sendloc= loc.getText().toString();
+                    }
+                    break;
+                    case R.id.rbYour: {
+                        flag = false;
 
+
+                        address.setVisibility(View.VISIBLE);
+                        loc.setVisibility(View.INVISIBLE);
+                        sendloc= address.getText().toString();
+                    }
+                    break;
+                }
+            }
+        });
     }
 
     private void getLastLocation() {
@@ -318,7 +340,7 @@ public class Orderselection extends AppCompatActivity {
             if (Time.equals("select time of meeting") || sendloc1.equals("") || senddate.equals("") || st9.equals("")) {
                 Toast.makeText(this, "something is missing", Toast.LENGTH_SHORT).show();
             } else {
-
+                sendloc = " ";
                 MyDatabaseHelper myDB = new MyDatabaseHelper(Orderselection.this);
                 myDB.addBook(Time.trim(),
                         senddate.trim(),
@@ -332,7 +354,7 @@ public class Orderselection extends AppCompatActivity {
                 hashMap1.put("RdbFoS", RdbFoS);
                 hashMap1.put("RdbToL", RdbToL);
                 hashMap1.put("how much time", sendhowmuchtime);
-                hashMap1.put("how much time", sendhowmuchtime);
+                hashMap1.put("address of the place of the Trap", "");
                 hashMap1.put("address of the place of the meeting", sendloc1);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference documentRef = db.collection("Users")
@@ -392,7 +414,7 @@ public class Orderselection extends AppCompatActivity {
 
 
         else {
-            if (Time.equals("select time of meeting") || sendloc1.equals("") || senddate.equals("") || st9.equals("")) {
+            if (Time.equals("select time of meeting") || sendloc1.equals("") || senddate.equals("") || st9.equals("") || sendloc.equals("")) {
                 Toast.makeText(this, "something is missing", Toast.LENGTH_SHORT).show();
             } else {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(Orderselection.this);
@@ -408,7 +430,7 @@ public class Orderselection extends AppCompatActivity {
                 hashMap1.put("RdbFoS", RdbFoS);
                 hashMap1.put("RdbToL", RdbToL);
                 hashMap1.put("how much time", sendhowmuchtime);
-                hashMap1.put("how much time", sendhowmuchtime);
+                hashMap1.put("address of the place of the Trap", sendloc);
                 hashMap1.put("address of the place of the meeting", sendloc1);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference documentRef = db.collection("Users")

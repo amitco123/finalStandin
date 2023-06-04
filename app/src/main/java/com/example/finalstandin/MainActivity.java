@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         user = Login.user1;
+        if (user.equals(""))
+            user=Signup.user2;
         BottomNavigationView = findViewById(R.id.bottom_navigation);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.cont, homeFragment).commit();

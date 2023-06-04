@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/set_day_off1"
+        android:title="set_day_off"
+        android:icon="@drawable/baseline_edit_calendar_24"/>
+    <item android:id="@+id/approved1"
+        android:title="approved"
+        android:icon="@drawable/baseline_done_all_24"/>
+    <item android:id="@+id/requests1"
+        android:title="requests"
+        android:icon="@drawable/baseline_quiz_24"/>
+</menu>

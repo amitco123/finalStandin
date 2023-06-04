@@ -1,30 +1,25 @@
 package com.example.finalstandin;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -32,47 +27,38 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
-public class ReviewFragment extends Fragment  implements SelectListener {
+public class RequestAdminFragment extends Fragment  implements SelectListener {
+
     View view;
     private DatabaseReference databaseReference;
     private ArrayList<Order> orderuser;
     FirebaseFirestore firestore;
     StorageReference storageReference;
-    String address, address2= "",  name = "a", date,  tol,oot,fos,thereason, phone,gender, time,how_much_time, birth, price ;
+    String address,address2="", name = "a", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price;
     Bitmap bitmap, bitmap1;
-   // String address2, age, money;
-    int count=0;
+//    String address2, age, money;
+    int count = 0;
     Order a;
     String st;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_review, container, false);
-
+        view = inflater.inflate(R.layout.fragment_request_admin, container, false);
         firestore= FirebaseFirestore.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
@@ -123,20 +109,19 @@ public class ReviewFragment extends Fragment  implements SelectListener {
                                             name = documentSnapshot.getString("name");
                                             gender = documentSnapshot.getString("gender");
                                             birth = documentSnapshot.getString("birth");
-                                            Toast.makeText(getContext(), address2, Toast.LENGTH_SHORT).show();
                                             if (how_much_time.equals("seven"))
                                                 price="400";
                                             else if (how_much_time.equals("six")) {
                                                 price="350";
                                             }
-                                                else if(how_much_time.equals("five"))
-                                                    price="315";
-                                                    else if(how_much_time.equals("four"))
-                                                    price="275";
-                                                        else if(how_much_time.equals("there"))
-                                                        price="225";
-                                                            else if(how_much_time.equals("two"))
-                                                            price="175";
+                                            else if(how_much_time.equals("five"))
+                                                price="315";
+                                            else if(how_much_time.equals("four"))
+                                                price="275";
+                                            else if(how_much_time.equals("there"))
+                                                price="225";
+                                            else if(how_much_time.equals("two"))
+                                                price="175";
                                             else
                                                 price="100";
 
@@ -149,7 +134,7 @@ public class ReviewFragment extends Fragment  implements SelectListener {
                                                         if (task.isSuccessful()) {
                                                             bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                                                             bitmap1 =bitmap;
-
+                                                            //Toast.makeText(getContext(), "succ", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
 
@@ -192,7 +177,7 @@ public class ReviewFragment extends Fragment  implements SelectListener {
             @Override
             public void run() {
 
-               // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
                 CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getActivity(),orderuser);
                 recyclerView1.setAdapter(customAdapterAdmin);
             }
@@ -201,11 +186,9 @@ public class ReviewFragment extends Fragment  implements SelectListener {
 
 
 
-
-
-
         return view;
     }
+
 
     @Override
     public void onItemLongClick(String date, String id) {
@@ -266,10 +249,7 @@ public class ReviewFragment extends Fragment  implements SelectListener {
         how_much_time1.setText(how_much_time);
         imageView1.setImageBitmap(image);
 
-        //phone.setText(user);
     }
-
-
 
 
 }

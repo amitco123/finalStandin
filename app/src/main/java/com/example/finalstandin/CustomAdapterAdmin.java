@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,9 +20,10 @@ import java.util.ArrayList;
 public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.MyViewHolder> {
 
     private Context context;
-    private ArrayList<String> date, time, address , name, money,  tol,oot,fos,thereason, phone,gender,how_much_time, birth ;
-    private ArrayList<Bitmap> imageView;
-    private ArrayList<Order> orders;
+ //   private ArrayList<String> date, time, address , name, money,  tol,oot,fos,thereason, phone,gender,how_much_time, birth ;
+//    private ArrayList<Bitmap> imageView;
+    private  ArrayList<Order> orders;
+    private  ArrayList<Order> orders1;
     private SelectListener listener;
 
 
@@ -29,6 +31,11 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
 
         this.context = context;
         this.orders= orders;
+        orders1=new ArrayList<>();
+        for (Order order:orders)
+        {
+            orders1.add(order);
+        }
 //        this.date = date;
 //        this.time = time;
 //        this.address = address;
@@ -55,20 +62,21 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder,final   int position) {
-            holder.date.setText(String.valueOf(date.get(position)));
-            holder.time.setText(String.valueOf(time.get(position)));
-            holder.address.setText(String.valueOf(address.get(position)));
-//            holder.name.setText(String.valueOf(name.get(position)));
-//            holder.money.setText(String.valueOf(money.get(position)));
-//            holder.tol.setText(String.valueOf(tol.get(position)));
-//            holder.oot.setText(String.valueOf(oot.get(position)));
-//            holder.fos.setText(String.valueOf(fos.get(position)));
-//            holder.thereason.setText(String.valueOf(thereason.get(position)));
-//            holder.phone.setText(String.valueOf(phone.get(position)));
-//            holder.gender.setText(String.valueOf(gender.get(position)));
-//            holder.how_much_time.setText(String.valueOf(how_much_time.get(position)));
-//            holder.birth.setText(String.valueOf(birth.get(position)));
-            holder.imageView.setImageBitmap((imageView.get(position)));
+            holder.date.setText((orders.get(position).getDate()));
+            holder.time.setText((orders.get(position).getTime()));
+            holder.address.setText((orders.get(position).getAddress()));
+
+            holder.imageView.setImageBitmap(orders.get(position).getBitmap());
+            //            holder.name.setText((name.get(position)));
+//            holder.money.setText((money.get(position)));
+//            holder.tol.setText((tol.get(position)));
+//            holder.oot.setText((oot.get(position)));
+//            holder.fos.setText((fos.get(position)));
+//            holder.thereason.setText((thereason.get(position)));
+//            holder.phone.setText((phone.get(position)));
+//            holder.gender.setText((gender.get(position)));
+//            holder.how_much_time.setText((how_much_time.get(position)));
+//            holder.birth.setText((birth.get(position)));
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,24 +85,33 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            listener.onClick(
+                            if(orders1.isEmpty())
+                            {
+                                listener.onClick(
 
-                                    String.valueOf(date.get(holder.getAdapterPosition())),  String.valueOf(time.get(holder.getAdapterPosition())),
-                                    String.valueOf(address.get(holder.getAdapterPosition())), String.valueOf(name.get(holder.getAdapterPosition())),
-                                    String.valueOf(money.get(holder.getAdapterPosition())), String.valueOf(tol.get(holder.getAdapterPosition())),
-                                    String.valueOf(oot.get(holder.getAdapterPosition())), String.valueOf(fos.get(holder.getAdapterPosition())),
-                                    String.valueOf(thereason.get(holder.getAdapterPosition())), String.valueOf(phone.get(holder.getAdapterPosition())),
-                                    String.valueOf(gender.get(holder.getAdapterPosition())), String.valueOf(how_much_time.get(holder.getAdapterPosition())),
-                                    String.valueOf(birth.get(holder.getAdapterPosition())), imageView.get(holder.getAdapterPosition()));
+                                        orders1.get(holder.getAdapterPosition()).getDate(),  orders1.get(holder.getAdapterPosition()).getTime(),
+                                        orders1.get(holder.getAdapterPosition()).getAddress(),orders1.get(holder.getAdapterPosition()).getAdress2(),
+                                        orders1.get(holder.getAdapterPosition()).getName(), orders1.get(holder.getAdapterPosition()).getPrice(),
+                                        orders1.get(holder.getAdapterPosition()).getTol(), orders1.get(holder.getAdapterPosition()).getOot(),
+                                        orders1.get(holder.getAdapterPosition()).getFos(), orders1.get(holder.getAdapterPosition()).getThereason(),
+                                        orders1.get(holder.getAdapterPosition()).getPhone(), orders1.get(holder.getAdapterPosition()).getGender(),
+                                        orders1.get(holder.getAdapterPosition()).getHow_much_time(), orders1.get(holder.getAdapterPosition()).getBirth(),
+                                        orders1.get(holder.getAdapterPosition()).getBitmap());
+                            }
+                            else
+                                Toast.makeText(context, "a", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             });
         }
 
+
+
         @Override
         public int getItemCount() {
-            return date.size();
+
+            return orders.size();
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder{

@@ -56,6 +56,7 @@ public class Signup extends AppCompatActivity {
     Uri imageUri;
     StorageReference storageReference;
     ProgressDialog progressDialog;
+    public static String user2 ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
