@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 
@@ -105,10 +104,13 @@ public class HomeFragment extends Fragment implements SelectListener {
         builder.setTitle("Delete " + date + " ?");
         builder.setMessage("You are sure that you would like to cancel the meeting, the cancellation fee is 50 shekels " + date + " ?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
+
+
                 myDB.deleteOneRow(id);
                 dialogInterface.dismiss();
                 databaseReference.child(date).removeValue();

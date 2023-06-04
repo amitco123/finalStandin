@@ -81,7 +81,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             date_txt = itemView.findViewById(R.id.date_txt);
             the_reason_txt = itemView.findViewById(R.id.the_reason_txt);
             address_txt= itemView.findViewById(R.id.address_txt);
-            mainLayout = itemView.findViewById(R.id.mainLayout);
+            mainLayout = itemView.findViewById(R.id.mainLayout1);
             //Animate Recyclerview
 //            Animation translate_anim = AnimationUtils.loadAnimation(context, R.anim.translate_anim);
 //            mainLayout.setAnimation(translate_anim);

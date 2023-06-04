@@ -123,7 +123,7 @@ public class ReviewFragment extends Fragment  implements SelectListener {
                                             name = documentSnapshot.getString("name");
                                             gender = documentSnapshot.getString("gender");
                                             birth = documentSnapshot.getString("birth");
-                                            Toast.makeText(getContext(), address2, Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getContext(), address2, Toast.LENGTH_SHORT).show();
                                             if (how_much_time.equals("seven"))
                                                 price="400";
                                             else if (how_much_time.equals("six")) {
@@ -193,7 +193,7 @@ public class ReviewFragment extends Fragment  implements SelectListener {
             public void run() {
 
                // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getActivity(),orderuser);
+                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getActivity(),orderuser,ReviewFragment.this);
                 recyclerView1.setAdapter(customAdapterAdmin);
             }
         };
@@ -214,47 +214,38 @@ public class ReviewFragment extends Fragment  implements SelectListener {
 
     @Override
     public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
-        TextView date2, name1, age1, phone1, address1,time2, money1,therreason,gender1,OoT,FoS,ToL,how_much_time1;
+        TextView date2, name1, age1, phone1, address1 ,adress22,time2, money1,therreason,gender1,OoT,FoS,ToL,how_much_time1;
         ImageView imageView1;
-        String user=databaseReference.child(date).getKey();
-        String amit;
 
-
-        FirebaseFirestore.getInstance().collection("Users")
-                .orderBy("Order" , Query.Direction.ASCENDING);
-
-
-        FirebaseFirestore.getInstance().collection("Users")
-                .document("" + user).collection("Orders").document( " " +date).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Toast.makeText(getContext(), documentSnapshot.getString("st9"), Toast.LENGTH_SHORT).show();
-                    }
-                });
 
         AlertDialog.Builder tempBuilder = new AlertDialog.Builder(getContext());
         View tempDialogView = getLayoutInflater().inflate(R.layout.dialog_admin, null, false);
         tempBuilder.setView(tempDialogView);
         AlertDialog tempAd = tempBuilder.create();
+
+        tempAd.show();
         date2 = tempAd.findViewById(R.id.date);
         name1 = tempAd.findViewById(R.id.name1);
         age1 = tempAd.findViewById(R.id.age);
         phone1 = tempAd.findViewById(R.id.phone);
-        address1 = tempAd.findViewById(R.id.address);
+        address1 = tempAd.findViewById(R.id.Address1);
         time2 = tempAd.findViewById(R.id.time);
         money1 = tempAd.findViewById(R.id.money);
         therreason = tempAd.findViewById(R.id.thereason);
-        gender1 = tempAd.findViewById(R.id.gender);
+        gender1 = tempAd.findViewById(R.id.gender12);
         OoT = tempAd.findViewById(R.id.OoT);
         FoS = tempAd.findViewById(R.id.FoS);
         ToL = tempAd.findViewById(R.id.ToL);
         how_much_time1= tempAd.findViewById(R.id.how_much_time);
+        adress22=tempAd.findViewById(R.id.address2);
         imageView1= tempAd.findViewById(R.id.imageView2);
+
 
         date2.setText(date);
         name1.setText(name);
         age1.setText(birth);
         phone1.setText(phone);
+        adress22.setText(address2);
         address1.setText(address);
         time2.setText(time);
         money1.setText(money);
@@ -266,7 +257,7 @@ public class ReviewFragment extends Fragment  implements SelectListener {
         how_much_time1.setText(how_much_time);
         imageView1.setImageBitmap(image);
 
-        //phone.setText(user);
+
     }
 
 

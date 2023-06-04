@@ -26,7 +26,7 @@ public class Order {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {
@@ -143,5 +143,9 @@ public class Order {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+    }
+    public  String toString()
+    {
+        return ""+ this.address;
     }
 }

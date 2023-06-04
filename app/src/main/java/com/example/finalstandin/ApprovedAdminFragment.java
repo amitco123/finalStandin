@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -177,7 +178,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
             public void run() {
 
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getActivity(),orderuser);
+                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getActivity(),orderuser,ApprovedAdminFragment.this);
                 recyclerView1.setAdapter(customAdapterAdmin);
             }
         };
@@ -196,21 +197,12 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
     public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
         TextView date2, name1, age1, phone1, address1,time2, money1,therreason,gender1,OoT,FoS,ToL,how_much_time1;
         ImageView imageView1;
-        String user=databaseReference.child(date).getKey();
-        String amit;
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
         FirebaseFirestore.getInstance().collection("Users")
                 .orderBy("Order" , Query.Direction.ASCENDING);
 
-
-        FirebaseFirestore.getInstance().collection("Users")
-                .document("" + user).collection("Orders").document( " " +date).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Toast.makeText(getContext(), documentSnapshot.getString("st9"), Toast.LENGTH_SHORT).show();
-                    }
-                });
 
         AlertDialog.Builder tempBuilder = new AlertDialog.Builder(getContext());
         View tempDialogView = getLayoutInflater().inflate(R.layout.dialog_admin, null, false);
@@ -231,6 +223,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
         how_much_time1= tempAd.findViewById(R.id.how_much_time);
         imageView1= tempAd.findViewById(R.id.imageView2);
 
+
         date2.setText(date);
         name1.setText(name);
         age1.setText(birth);
@@ -245,6 +238,5 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
         ToL.setText(tol);
         how_much_time1.setText(how_much_time);
         imageView1.setImageBitmap(image);
-
     }
 }
