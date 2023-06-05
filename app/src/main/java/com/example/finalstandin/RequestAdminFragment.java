@@ -56,8 +56,8 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_request_admin, container, false);
-        firestore= FirebaseFirestore.getInstance();
 
+        firestore= FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
         orderuser = new ArrayList<>();
@@ -131,7 +131,6 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                                                         if (task.isSuccessful()) {
                                                             bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                                                             bitmap1 =bitmap;
-                                                            //Toast.makeText(getContext(), "succ", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
 
@@ -165,7 +164,7 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
 
             }
         });
-        Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
+        //Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
 //        orderuser.add(a);
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
@@ -197,8 +196,7 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
         Button yes, no;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
-        FirebaseFirestore.getInstance().collection("Users")
-                .orderBy("Order" , Query.Direction.ASCENDING);
+
 
 
         AlertDialog.Builder tempBuilder = new AlertDialog.Builder(getContext());

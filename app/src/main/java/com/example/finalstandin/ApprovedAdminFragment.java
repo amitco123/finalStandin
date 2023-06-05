@@ -57,8 +57,10 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =inflater.inflate(R.layout.fragment_approved_admin, container, false);
-        firestore= FirebaseFirestore.getInstance();
 
+
+
+        firestore= FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
         orderuser = new ArrayList<>();
@@ -132,7 +134,6 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                                                         if (task.isSuccessful()) {
                                                             bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                                                             bitmap1 =bitmap;
-                                                            //Toast.makeText(getContext(), "succ", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
 
@@ -166,7 +167,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
 
             }
         });
-        Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
+        //Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
 //        orderuser.add(a);
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
@@ -195,33 +196,32 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
     public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
         TextView date2, name1, age1, phone1, address1,time2, money1,therreason,gender1,OoT,FoS,ToL,how_much_time1;
         ImageView imageView1;
-
+        Button cancel;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
-        FirebaseFirestore.getInstance().collection("Users")
-                .orderBy("Order" , Query.Direction.ASCENDING);
+
 
 
         AlertDialog.Builder tempBuilder = new AlertDialog.Builder(getContext());
-        View tempDialogView = getLayoutInflater().inflate(R.layout.dialog_admin, null, false);
+        View tempDialogView = getLayoutInflater().inflate(R.layout.dialog_cancel_admin, null, false);
         tempBuilder.setView(tempDialogView);
         AlertDialog tempAd = tempBuilder.create();
         tempAd.show();
-        date2 = tempAd.findViewById(R.id.date);
-        name1 = tempAd.findViewById(R.id.name1);
-        age1 = tempAd.findViewById(R.id.age);
-        phone1 = tempAd.findViewById(R.id.phone);
-        address1 = tempAd.findViewById(R.id.Address1);
-        time2 = tempAd.findViewById(R.id.time);
-        money1 = tempAd.findViewById(R.id.money);
-        therreason = tempAd.findViewById(R.id.thereason);
-        gender1 = tempAd.findViewById(R.id.gender12);
-        OoT = tempAd.findViewById(R.id.OoT);
-        FoS = tempAd.findViewById(R.id.FoS);
-        ToL = tempAd.findViewById(R.id.ToL);
-        how_much_time1= tempAd.findViewById(R.id.how_much_time);
-        imageView1= tempAd.findViewById(R.id.imageView2);
-
+        date2 = tempAd.findViewById(R.id.date1);
+        name1 = tempAd.findViewById(R.id.name11);
+        age1 = tempAd.findViewById(R.id.age1);
+        phone1 = tempAd.findViewById(R.id.phone11);
+        address1 = tempAd.findViewById(R.id.Address11);
+        time2 = tempAd.findViewById(R.id.time1);
+        money1 = tempAd.findViewById(R.id.money1);
+        therreason = tempAd.findViewById(R.id.thereason1);
+        gender1 = tempAd.findViewById(R.id.gender121);
+        OoT = tempAd.findViewById(R.id.OoT1);
+        FoS = tempAd.findViewById(R.id.FoS1);
+        ToL = tempAd.findViewById(R.id.ToL1);
+        how_much_time1= tempAd.findViewById(R.id.how_much_time1);
+        imageView1= tempAd.findViewById(R.id.imageView21);
+        cancel= tempAd.findViewById(R.id.cancel);
 
 
         date2.setText(date);
@@ -238,5 +238,15 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
         ToL.setText(tol);
         how_much_time1.setText(how_much_time);
         imageView1.setImageBitmap(image);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseReference.child(date).removeValue();
+                firestore.collection("Users")
+                        .document(phone).collection("Orders")
+                        .document(" " +date).delete();
+            }
+        });
+
     }
 }

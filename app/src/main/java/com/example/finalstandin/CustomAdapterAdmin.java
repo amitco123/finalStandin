@@ -30,7 +30,7 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
         this.context = context;
         this.orders= orders;
         this.listener=listener;
-        this.activity = activity;
+        this.activity=activity;
     }
 
         @NonNull
@@ -59,9 +59,6 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
                         @Override
                         public void onClick(View view) {
 
-//                            for (Order order:orders) {
-//
-//                            }
 
                             String Date,Time,Address,Name,Price,Tol,Oot,Fos,Adress2,Thereason,Phone,Gender,How_much_time,Birth;
                             Bitmap bitmap;
@@ -81,18 +78,8 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
                             Birth=orders.get(holder.getAdapterPosition()).getBirth();
                             bitmap= orders.get(holder.getAdapterPosition()).getBitmap();
                             listener.onClick(Date,Time,Address,Adress2,Name,Price,Tol,Oot,Fos,Thereason,Phone,Gender,How_much_time,Birth,bitmap);
-//                            Toast.makeText(context, ", "+Tol , Toast.LENGTH_LONG).show();
+                            //Toast.makeText(context, ", "+Date , Toast.LENGTH_LONG).show();
 
-//                           listener.onClick(
-//
-//                orders.get(holder.getAdapterPosition()).getDate(),  orders.get(holder.getAdapterPosition()).getTime(),
-//                                orders.get(holder.getAdapterPosition()).getAddress(),orders.get(holder.getAdapterPosition()).getAdress2(),
-//                 orders.get(holder.getAdapterPosition()).getName(), orders.get(holder.getAdapterPosition()).getPrice(),
-//                orders.get(holder.getAdapterPosition()).getTol(), orders.get(holder.getAdapterPosition()).getOot(),
-//               orders.get(holder.getAdapterPosition()).getFos(), orders.get(holder.getAdapterPosition()).getThereason(),
-//                 orders.get(holder.getAdapterPosition()).getPhone(), orders.get(holder.getAdapterPosition()).getGender(),
-//                 orders.get(holder.getAdapterPosition()).getHow_much_time(), orders.get(holder.getAdapterPosition()).getBirth(),
-//                  orders.get(holder.getAdapterPosition()).getBitmap());
 
                         }
                     });
