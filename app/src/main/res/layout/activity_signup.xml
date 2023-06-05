@@ -13,8 +13,10 @@
         android:layout_below="@+id/name"
         android:layout_alignParentEnd="true"
 
+        android:layout_marginStart="28dp"
         android:layout_marginTop="19dp"
         android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/textbirth"
         android:text="Select a gender:"
         android:textColor="@color/white"
         android:textSize="25dp"
@@ -57,7 +59,6 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
-    
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signupbtn"
@@ -70,9 +71,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
 
-        android:layout_marginStart="134dp"
-        android:layout_marginEnd="136dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginBottom="35dp"
         android:backgroundTint="@color/design_default_color_secondary"
         android:text="Signup" />
 
@@ -128,6 +129,8 @@
         android:layout_height="74dp"
         android:layout_below="@+id/textbirth"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="19dp"
+        android:layout_toStartOf="@+id/radiogender"
         android:onClick="openDatePicker"
         android:text="select date"
         android:textColor="@color/white"
@@ -143,10 +146,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="246dp"
+        android:layout_marginStart="148dp"
         android:layout_marginTop="108dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="177dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="113dp"
 
         android:text="select"
         app:layout_constraintEnd_toEndOf="parent"
@@ -162,10 +165,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="396dp"
-        android:layout_marginEnd="204dp"
-        android:layout_marginBottom="154dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="374dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="176dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

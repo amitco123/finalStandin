@@ -193,12 +193,19 @@ public class Login extends AppCompatActivity {
         FirebaseUser currentUser =  FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser!=null)
         {
+            if(currentUser.getPhoneNumber().equals("+972532748823"))
+            {
+                Intent intent = new Intent(Login.this, MainActivity2.class);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(Login.this, MainActivity2.class);
 
-            Intent intent = new Intent(Login.this, MainActivity.class);
+                intent.putExtra("User",currentUser.getPhoneNumber());
+                user1=currentUser.getPhoneNumber();
+                startActivity(intent);
+            }
 
-            intent.putExtra("User",currentUser.getPhoneNumber());
-            user1=currentUser.getPhoneNumber();
-            startActivity(intent);
       }
     }
 

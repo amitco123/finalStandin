@@ -71,11 +71,10 @@ public class Orderselection extends AppCompatActivity {
     AutoCompleteTextView autoCompleteTextView;
     FirebaseAuth mAuth;
     boolean flag;
-    String sendaddress, Time, RdbToL, RdbFoS, RdbOoT, sendloc1, sendloc = "", senddate, st9, sendhowmuchtime, user1;
+    String sendaddress, Time, RdbToL, RdbFoS, RdbOoT, sendloc1, sendloc = "", senddate, st9, sendhowmuchtime, user1, name = " aba", birth, gender ,st;
     private DatabaseReference databaseReference;
     FirebaseFirestore firestore;
-    String name = " aba", birth, gender;
-    public String st;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,6 +284,12 @@ public class Orderselection extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
+
 
     private void getLastLocation() {
         if (ContextCompat.checkSelfPermission(Orderselection.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {

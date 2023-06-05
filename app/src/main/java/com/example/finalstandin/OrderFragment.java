@@ -28,7 +28,7 @@ public class OrderFragment extends Fragment {
         private TextView textView;
 
         private String stringDateSelected;
-        private DatabaseReference databaseReference;
+            private DatabaseReference databaseReference;
         Button button;
         String user1;
     @Override

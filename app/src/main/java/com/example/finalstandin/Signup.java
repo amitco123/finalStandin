@@ -37,7 +37,7 @@ import java.util.HashMap;
 public class Signup extends AppCompatActivity {
 
     EditText phone, otp, A, fullname;
-    Button btngenOTP, btnverify, signupbtn;
+    Button btngenOTP, btnverify, signupbtn,selectImageBtn, uploadImageBtn;
     RadioGroup radiogender;
     RadioButton female, male;
     FirebaseAuth mAuth;
@@ -49,8 +49,6 @@ public class Signup extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
 
-
-    Button selectImageBtn, uploadImageBtn;
     private ImageView image;
 
     Uri imageUri;

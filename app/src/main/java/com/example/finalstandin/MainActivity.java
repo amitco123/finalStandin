@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment= new HomeFragment();
     OrderFragment orderFragment =new OrderFragment();
     ReviewFragment reviewFragment =new ReviewFragment();
-    UpdateFragment updateFragment=new UpdateFragment();
 
     String user;
     @Override

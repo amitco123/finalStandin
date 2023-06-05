@@ -13,13 +13,11 @@
       android:id="@+id/how_much_time"
       android:layout_width="147dp"
       android:layout_height="30dp"
-      android:layout_marginStart="8dp"
+      android:layout_marginStart="28dp"
       android:layout_marginTop="20dp"
       android:text="how_much_time"
       android:textAlignment="center"
       android:textSize="20sp"
-      app:layout_constraintEnd_toStartOf="@+id/ToL"
-      app:layout_constraintHorizontal_bias="0.268"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/FoS" />
 
@@ -37,10 +35,10 @@
 
   <TextView
       android:id="@+id/age"
-      android:layout_width="74dp"
-      android:layout_height="35dp"
+      android:layout_width="76dp"
+      android:layout_height="42dp"
       android:text="age"
-      android:textSize="20sp"
+      android:textSize="16sp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="@+id/name1" />
 
@@ -63,10 +61,14 @@
       android:layout_height="wrap_content"
 
       android:layout_marginTop="20dp"
-      android:layout_marginEnd="44dp"
+      android:layout_marginEnd="36dp"
       android:text="yes"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/no"
-      app:layout_constraintTop_toBottomOf="@+id/how_much_time" />
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/how_much_time"
+      app:layout_constraintVertical_bias="0.0" />
 
   <TextView
       android:id="@+id/ToL"
@@ -78,14 +80,13 @@
       android:textSize="20sp"
       app:layout_constraintBottom_toBottomOf="@+id/how_much_time"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.939"
-      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/FoS" />
 
   <TextView
       android:id="@+id/OoT"
       android:layout_width="141dp"
       android:layout_height="30dp"
+      android:layout_marginStart="36dp"
       android:layout_marginTop="16dp"
       android:text="OoT"
       android:textAlignment="center"
@@ -98,12 +99,14 @@
       android:layout_width="149dp"
       android:layout_height="30dp"
       android:layout_marginTop="16dp"
-      android:layout_marginEnd="40dp"
+      android:layout_marginEnd="4dp"
       android:text="FoS"
       android:textAlignment="center"
       android:textSize="20sp"
+      app:layout_constraintBottom_toBottomOf="@+id/OoT"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/address2" />
+      app:layout_constraintTop_toBottomOf="@+id/address2"
+      app:layout_constraintVertical_bias="0.0" />
 
   <TextView
       android:id="@+id/time"
@@ -161,11 +164,12 @@
       android:id="@+id/no"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="76dp"
+      android:layout_marginEnd="56dp"
       android:text="No"
       app:layout_constraintBottom_toBottomOf="@+id/yes"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="@+id/yes" />
+      app:layout_constraintTop_toTopOf="@+id/yes"
+      app:layout_constraintVertical_bias="0.0" />
 
   <TextView
       android:id="@+id/phone"

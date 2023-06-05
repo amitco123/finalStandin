@@ -48,12 +48,10 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
     private ArrayList<Order> orderuser;
     FirebaseFirestore firestore;
     StorageReference storageReference;
-    String address,address2="", name = "a", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price;
+    String address,address2="", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
     Bitmap bitmap, bitmap1;
-    //    String address2, age, money;
-    int count = 0;
-    Order a;
-    String st;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -169,16 +167,16 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
             }
         });
         Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
-        orderuser.add(a);
+//        orderuser.add(a);
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
-        orderuser.remove(a);
+//        orderuser.remove(a);
         mRunnable2 = new Runnable() {
             @Override
             public void run() {
 
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getActivity(),orderuser,ApprovedAdminFragment.this);
+                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getContext(),orderuser,ApprovedAdminFragment.this, getActivity());
                 recyclerView1.setAdapter(customAdapterAdmin);
             }
         };
@@ -208,20 +206,22 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
         View tempDialogView = getLayoutInflater().inflate(R.layout.dialog_admin, null, false);
         tempBuilder.setView(tempDialogView);
         AlertDialog tempAd = tempBuilder.create();
+        tempAd.show();
         date2 = tempAd.findViewById(R.id.date);
         name1 = tempAd.findViewById(R.id.name1);
         age1 = tempAd.findViewById(R.id.age);
         phone1 = tempAd.findViewById(R.id.phone);
-        address1 = tempAd.findViewById(R.id.address);
+        address1 = tempAd.findViewById(R.id.Address1);
         time2 = tempAd.findViewById(R.id.time);
         money1 = tempAd.findViewById(R.id.money);
         therreason = tempAd.findViewById(R.id.thereason);
-        gender1 = tempAd.findViewById(R.id.gender);
+        gender1 = tempAd.findViewById(R.id.gender12);
         OoT = tempAd.findViewById(R.id.OoT);
         FoS = tempAd.findViewById(R.id.FoS);
         ToL = tempAd.findViewById(R.id.ToL);
         how_much_time1= tempAd.findViewById(R.id.how_much_time);
         imageView1= tempAd.findViewById(R.id.imageView2);
+
 
 
         date2.setText(date);

@@ -48,12 +48,8 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
     private ArrayList<Order> orderuser;
     FirebaseFirestore firestore;
     StorageReference storageReference;
-    String address,address2="", name = "a", date, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth, price;
+    String address,address2="", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
     Bitmap bitmap, bitmap1;
-//    String address2, age, money;
-    int count = 0;
-    Order a;
-    String st;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,14 +81,14 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
 
 
                         date = dataSnapshot.getKey();
-                        phone1 = dataSnapshot.getValue().toString();
-                        phone1 = phone1.substring(1, 14);
-                        //Toast.makeText(getContext(), phone1 , Toast.LENGTH_SHORT).show();
+                        phone = dataSnapshot.getValue().toString();
+                        phone = phone.substring(1, 14);
+                        //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
                         String tempdate =""+ date;
-                        storageReference= FirebaseStorage.getInstance().getReference("image/" + phone1);
+                        storageReference= FirebaseStorage.getInstance().getReference("image/" + phone);
 
                         DocumentReference documentRef = db.collection("Users")
-                                .document(phone1).collection("Orders")
+                                .document(phone).collection("Orders")
                                 .document(" " + date);
                         documentRef.get()
                                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -128,18 +124,14 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
 
                                             // Process the retrieved data
                                             try {
-                                                File localFile = File.createTempFile("" + phone1, "jpeg");
+                                                File localFile = File.createTempFile("" + phone, "jpeg");
                                                 storageReference.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
                                                         if (task.isSuccessful()) {
-                                                            //bitmap = ;
-                                                            //bitmap1 =bitmap;
+                                                            bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                            bitmap1 =bitmap;
                                                             //Toast.makeText(getContext(), "succ", Toast.LENGTH_SHORT).show();
-
-                                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth,price, BitmapFactory.decodeFile(localFile.getAbsolutePath()));
-                                                            orderuser.add(order);
-
                                                         }
                                                     }
 
@@ -149,9 +141,8 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                                             }
 //                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
 //                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-
-
-
+                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth,price, bitmap1);
+                                            orderuser.add(order);
 
                                             //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
                                             // Log the address
@@ -175,16 +166,16 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
             }
         });
         Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
-        orderuser.add(a);
+//        orderuser.add(a);
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
-        orderuser.remove(a);
+//        orderuser.remove(a);
         mRunnable2 = new Runnable() {
             @Override
             public void run() {
 
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getActivity(),orderuser,RequestAdminFragment.this);
+                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getContext(),orderuser,RequestAdminFragment.this, getActivity());
                 recyclerView1.setAdapter(customAdapterAdmin);
             }
         };
@@ -194,8 +185,6 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
 
         return view;
     }
-
-
     @Override
     public void onItemLongClick(String date, String id) {
 
@@ -216,15 +205,16 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
         View tempDialogView = getLayoutInflater().inflate(R.layout.dialog_admin, null, false);
         tempBuilder.setView(tempDialogView);
         AlertDialog tempAd = tempBuilder.create();
+        tempAd.show();
         date2 = tempAd.findViewById(R.id.date);
         name1 = tempAd.findViewById(R.id.name1);
         age1 = tempAd.findViewById(R.id.age);
         phone1 = tempAd.findViewById(R.id.phone);
-        address1 = tempAd.findViewById(R.id.address);
+        address1 = tempAd.findViewById(R.id.Address1);
         time2 = tempAd.findViewById(R.id.time);
         money1 = tempAd.findViewById(R.id.money);
         therreason = tempAd.findViewById(R.id.thereason);
-        gender1 = tempAd.findViewById(R.id.gender);
+        gender1 = tempAd.findViewById(R.id.gender12);
         OoT = tempAd.findViewById(R.id.OoT);
         FoS = tempAd.findViewById(R.id.FoS);
         ToL = tempAd.findViewById(R.id.ToL);
@@ -247,12 +237,10 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
         ToL.setText(tol);
         how_much_time1.setText(how_much_time);
         imageView1.setImageBitmap(image);
-
-
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseReference.child(date).setValue("true");
+                databaseReference.child(date).child(phone).setValue("true");
             }
         });
         no.setOnClickListener(new View.OnClickListener() {
@@ -262,10 +250,9 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                 databaseReference.child(date).removeValue();
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
-                        .document(" " + date).delete();
-            }
-        });
+                        .document(" " +date).delete();
+            }});
     }
-
-
 }
+
+

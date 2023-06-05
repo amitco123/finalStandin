@@ -1,5 +1,6 @@
 package com.example.finalstandin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -19,17 +20,17 @@ import java.util.Objects;
 public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.MyViewHolder> {
 
     private Context context;
-
+    private Activity activity;
     public  ArrayList<Order> orders;
-    private  ArrayList<Order> orders1;
     private SelectListener listener;
 
 
-    CustomAdapterAdmin (Context context,ArrayList<Order> orders ,SelectListener listener ){ //ArrayList<String> date, ArrayList<String> time, ArrayList<String> address , ArrayList<String> name , ArrayList<String> money , ArrayList<String> tol , ArrayList<String> oot ,ArrayList<String> fos , ArrayList<String> thereason, ArrayList<String> phone , ArrayList<String> gender , ArrayList<String> how_much_time ,ArrayList<String> birth ,ArrayList<Bitmap> imageView){
+    CustomAdapterAdmin (Context context,ArrayList<Order> orders ,SelectListener listener ,Activity activity ){ //ArrayList<String> date, ArrayList<String> time, ArrayList<String> address , ArrayList<String> name , ArrayList<String> money , ArrayList<String> tol , ArrayList<String> oot ,ArrayList<String> fos , ArrayList<String> thereason, ArrayList<String> phone , ArrayList<String> gender , ArrayList<String> how_much_time ,ArrayList<String> birth ,ArrayList<Bitmap> imageView){
 
         this.context = context;
         this.orders= orders;
         this.listener=listener;
+        this.activity = activity;
     }
 
         @NonNull

@@ -30,7 +30,7 @@ public class SetDayOffAdminFragment extends Fragment {
     private String stringDateSelected;
     private DatabaseReference databaseReference;
     Button button;
-    String user1 = "+972532748823";;
+    String user1 = "+972532748823";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
