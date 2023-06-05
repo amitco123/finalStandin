@@ -1,0 +1,268 @@
+@startuml
+class com.example.finalstandin.CustomAdapterAdmin {
+- Context context
++ ArrayList<Order> orders
+- ArrayList<Order> orders1
+- SelectListener listener
+~ <<Create>> CustomAdapterAdmin(Context,ArrayList<Order>,SelectListener)
++ MyViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(MyViewHolder,int)
++ int getItemCount()
+}
+class com.example.finalstandin.CustomAdapterAdmin$MyViewHolder {
+~ TextView date
+~ ImageView imageView
+~ LinearLayout mainLayout
++ <<Create>> MyViewHolder(View)
+}
+class com.example.finalstandin.SetDayOffAdminFragment {
+~ View view
+- CalendarView calendarView
+- TextView textView
+- String stringDateSelected
+- DatabaseReference databaseReference
+~ Button button
+~ String user1
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void calendarClicked()
+}
+class com.example.finalstandin.OrderFragment {
+~ View view
+- CalendarView calendarView
+- TextView textView
+- String stringDateSelected
+- DatabaseReference databaseReference
+~ Button button
+~ String user1
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void calendarClicked()
+}
+class com.example.finalstandin.RequestAdminFragment {
+~ View view
+- DatabaseReference databaseReference
+- ArrayList<Order> orderuser
+~ FirebaseFirestore firestore
+~ StorageReference storageReference
+~ String address
+~ Bitmap bitmap
+~ int count
+~ Order a
+~ String st
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onItemLongClick(String,String)
++ void onClick(String,String,String,String,String,String,String,String,String,String,String,String,String,String,Bitmap)
+}
+class com.example.finalstandin.UpdateFragment {
+~ int is
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+class com.example.finalstandin.MyDatabaseHelper {
+- Context context
+- {static} String DATABASE_NAME
+- {static} int DATABASE_VERSION
+- {static} String TABLE_NAME
+- {static} String COLUMN_ID
+- {static} String COLUMN_TIME
+- {static} String COLUMN_DATE
+- {static} String COLUMN_REASON
+- {static} String COLUMN_ADDRESS
+~ <<Create>> MyDatabaseHelper(Context)
++ void onCreate(SQLiteDatabase)
++ void onUpgrade(SQLiteDatabase,int,int)
+~ void addBook(String,String,String,String)
+~ Cursor readAllData()
+~ void deleteOneRow(String)
+}
+class com.example.finalstandin.MainActivity2 {
+~ ApprovedAdminFragment approvedAdminFragment
+~ RequestAdminFragment requestAdminFragment
+~ SetDayOffAdminFragment setDayOffAdminFragment
+~ BottomNavigationView BottomNavigationView
++ {static} String user1
+# void onCreate(Bundle)
+}
+class com.example.finalstandin.Signup {
+~ EditText phone
+~ Button btngenOTP
+~ RadioGroup radiogender
+~ RadioButton female
+~ FirebaseAuth mAuth
+~ String verificationID
+~ ProgressBar bar
+~ TextView birth
+- DatePickerDialog datePickerDialog
+- Button dateButton
+~ Button selectImageBtn
+- ImageView image
+~ Uri imageUri
+~ StorageReference storageReference
+~ ProgressDialog progressDialog
++ {static} String user2
+# void onCreate(Bundle)
+# void onActivityResult(int,int,Intent)
+- String getTodayDate()
+- void initDatePicker()
+- String makeDateString(int,int,int)
+- String getMonthFormat(int)
++ void openDatePicker(View)
+}
+class com.example.finalstandin.ReviewFragment {
+~ View view
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+interface com.example.finalstandin.SelectListener {
+~ void onItemLongClick(String,String)
+~ void onClick(String,String,String,String,String,String,String,String,String,String,String,String,String,String,Bitmap)
+}
+class com.example.finalstandin.MainActivity {
+~ BottomNavigationView BottomNavigationView
+~ HomeFragment homeFragment
+~ OrderFragment orderFragment
+~ ReviewFragment reviewFragment
+~ UpdateFragment updateFragment
+~ String user
+# void onCreate(Bundle)
+}
+class com.example.finalstandin.Orderselection {
+~ FusedLocationProviderClient fusedLocationProviderClient
+~ TextView address
+~ int t1Hour
+- {static} int REQUEST_CODE
+~ RadioGroup rgBtnGroupDescribe1
+~ Spinner spinner
+~ TextInputLayout textInputLayout
+~ EditText loc1
+~ AutoCompleteTextView autoCompleteTextView
+~ FirebaseAuth mAuth
+~ boolean flag
+~ String sendaddress
+- DatabaseReference databaseReference
+~ FirebaseFirestore firestore
+~ String name
++ String st
+# void onCreate(Bundle)
+- void getLastLocation()
+- void askPermission()
++ void onRequestPermissionsResult(int,String[],int[])
++ void gopay(View)
+}
+class com.example.finalstandin.CustomAdapter {
+- Context context
+- Activity activity
+- ArrayList id
+- SelectListener listener
+~ <<Create>> CustomAdapter(Activity,Context,ArrayList,ArrayList,ArrayList,ArrayList,ArrayList,SelectListener)
++ MyViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(MyViewHolder,int)
++ int getItemCount()
+}
+class com.example.finalstandin.CustomAdapter$MyViewHolder {
+~ TextView id_txt
+~ LinearLayout mainLayout
+~ <<Create>> MyViewHolder(View)
+}
+class com.example.finalstandin.HomeFragment {
+~ View view
+~ RecyclerView recyclerView
+~ ImageView empty_imageview
+~ TextView no_data
+~ String user1
+~ MyDatabaseHelper myDB
+~ ArrayList<String> id
+~ CustomAdapter customAdapter
+- DatabaseReference databaseReference
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+~ void storeDataInArrays()
++ void onItemLongClick(String,String)
++ void onClick(String,String,String,String,String,String,String,String,String,String,String,String,String,String,Bitmap)
+}
+class com.example.finalstandin.Order {
+- String address
++ Bitmap bitmap
++ <<Create>> Order(String,String,String,String,String,String,String,String,String,String,String,String,String,String,Bitmap)
++ String getAddress()
++ void setAddress(String)
++ String getAdress2()
++ void setAdress2(String)
++ String getName()
++ void setName(String)
++ String getDate()
++ void setDate(String)
++ String getTol()
++ void setTol(String)
++ String getOot()
++ void setOot(String)
++ String getFos()
++ void setFos(String)
++ String getThereason()
++ void setThereason(String)
++ String getPhone()
++ void setPhone(String)
++ String getGender()
++ void setGender(String)
++ String getTime()
++ void setTime(String)
++ String getHow_much_time()
++ void setHow_much_time(String)
++ String getBirth()
++ void setBirth(String)
++ String getPrice()
++ void setPrice(String)
++ Bitmap getBitmap()
++ void setBitmap(Bitmap)
++ String toString()
+}
+class com.example.finalstandin.Login {
+~ EditText phone
+~ Button btngenOTP
+~ FirebaseAuth mAuth
+~ String verificationID
+~ ProgressBar bar
++ {static} String user1
+- PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks
+# void onCreate(Bundle)
+- void sendverificationcode(String)
+- void verifycode(String)
+- void signinbyCredentials(PhoneAuthCredential)
+# void onStart()
+}
+class com.example.finalstandin.ApprovedAdminFragment {
+~ View view
+- DatabaseReference databaseReference
+- ArrayList<Order> orderuser
+~ FirebaseFirestore firestore
+~ StorageReference storageReference
+~ String address
+~ Bitmap bitmap
+~ int count
+~ Order a
+~ String st
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onItemLongClick(String,String)
++ void onClick(String,String,String,String,String,String,String,String,String,String,String,String,String,String,Bitmap)
+}
+
+
+com.example.finalstandin.Adapter <|-- com.example.finalstandin.CustomAdapterAdmin
+com.example.finalstandin.CustomAdapterAdmin +.. com.example.finalstandin.CustomAdapterAdmin$MyViewHolder
+com.example.finalstandin.ViewHolder <|-- com.example.finalstandin.CustomAdapterAdmin$MyViewHolder
+androidx.fragment.app.Fragment <|-- com.example.finalstandin.SetDayOffAdminFragment
+androidx.fragment.app.Fragment <|-- com.example.finalstandin.OrderFragment
+com.example.finalstandin.SelectListener <|.. com.example.finalstandin.RequestAdminFragment
+androidx.fragment.app.Fragment <|-- com.example.finalstandin.RequestAdminFragment
+androidx.fragment.app.Fragment <|-- com.example.finalstandin.UpdateFragment
+android.database.sqlite.SQLiteOpenHelper <|-- com.example.finalstandin.MyDatabaseHelper
+androidx.appcompat.app.AppCompatActivity <|-- com.example.finalstandin.MainActivity2
+androidx.appcompat.app.AppCompatActivity <|-- com.example.finalstandin.Signup
+androidx.fragment.app.Fragment <|-- com.example.finalstandin.ReviewFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.example.finalstandin.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.finalstandin.Orderselection
+com.example.finalstandin.Adapter <|-- com.example.finalstandin.CustomAdapter
+com.example.finalstandin.CustomAdapter +.. com.example.finalstandin.CustomAdapter$MyViewHolder
+com.example.finalstandin.ViewHolder <|-- com.example.finalstandin.CustomAdapter$MyViewHolder
+com.example.finalstandin.SelectListener <|.. com.example.finalstandin.HomeFragment
+androidx.fragment.app.Fragment <|-- com.example.finalstandin.HomeFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.example.finalstandin.Login
+com.example.finalstandin.SelectListener <|.. com.example.finalstandin.ApprovedAdminFragment
+androidx.fragment.app.Fragment <|-- com.example.finalstandin.ApprovedAdminFragment
+@enduml
