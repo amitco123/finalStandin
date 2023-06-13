@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".Signup">
 
     <TextView
         android:id="@+id/gender"
         android:layout_width="wrap_content"
-        android:layout_height="44dp"
+        android:layout_height="51dp"
         android:layout_below="@+id/name"
         android:layout_alignParentEnd="true"
 
         android:layout_marginStart="28dp"
         android:layout_marginTop="19dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="5dp"
         android:layout_toEndOf="@+id/textbirth"
         android:text="Select a gender:"
         android:textColor="@color/white"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:visibility="visible" />
 
     <TextView
@@ -118,38 +119,38 @@
         android:layout_marginTop="20dp"
         android:text="date of barth:"
         android:textColor="@color/white"
-        android:textSize="25dp"
+        android:textSize="20dp"
         />
     <!--        android:visibility="invisible"/>-->
 
     <Button
         android:id="@+id/birth"
         style="?android:spinnerStyle"
-        android:layout_width="203dp"
-        android:layout_height="74dp"
+        android:layout_width="209dp"
+        android:layout_height="66dp"
         android:layout_below="@+id/textbirth"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginEnd="13dp"
         android:layout_toStartOf="@+id/radiogender"
         android:onClick="openDatePicker"
         android:text="select date"
         android:textColor="@color/white"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:visibility="visible" />
     <!--        android:visibility="invisible"-->
 
     <Button
         android:id="@+id/selectImageButton"
-        android:layout_width="122dp"
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="148dp"
+        android:layout_marginStart="136dp"
         android:layout_marginTop="108dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginBottom="113dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginBottom="102dp"
 
         android:text="select"
         app:layout_constraintEnd_toEndOf="parent"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:id="@+id/mainLayout1">
 
     <androidx.cardview.widget.CardView
@@ -13,6 +14,7 @@
         android:layout_marginTop="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@drawable/background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp">
@@ -35,7 +37,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="16dp"
                 android:text="Title 1"
-                android:textColor="#000"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/id_txt"
@@ -47,6 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Author1"
+                android:textColor="@color/white"
+
                 app:layout_constraintStart_toStartOf="@+id/date_txt"
                 app:layout_constraintTop_toBottomOf="@+id/date_txt" />
 
@@ -55,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="120"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -65,6 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:text="10"
+                android:textColor="@color/white"
+
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

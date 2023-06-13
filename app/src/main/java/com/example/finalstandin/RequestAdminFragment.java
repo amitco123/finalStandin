@@ -82,13 +82,14 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
 
                         date = dataSnapshot.getKey();
                         phone = dataSnapshot.getValue().toString();
-                        phone = phone.substring(1, 14);
+                        phone = ""+phone.substring(1, 14);
+                        String phone1 =""+ phone;
                         //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
                         String tempdate =""+ date;
-                        storageReference= FirebaseStorage.getInstance().getReference("image/" + phone);
+
 
                         DocumentReference documentRef = db.collection("Users")
-                                .document(phone).collection("Orders")
+                                .document(""+phone1).collection("Orders")
                                 .document(" " + date);
                         documentRef.get()
                                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -122,15 +123,22 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                                             else
                                                 price="100";
 
+
                                             // Process the retrieved data
                                             try {
-                                                File localFile = File.createTempFile("" + phone, "jpeg");
+                                                //Toast.makeText(getActivity(), " "+phone1, Toast.LENGTH_SHORT).show();
+                                                storageReference= FirebaseStorage.getInstance().getReference("image/" + phone1);
+                                                File localFile = File.createTempFile(phone1, "jpeg");
+
+
                                                 storageReference.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
                                                         if (task.isSuccessful()) {
+
                                                             bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                            bitmap1 =bitmap;
+                                                           bitmap1 = bitmap;
+
                                                         }
                                                     }
 
@@ -138,10 +146,11 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                                             } catch (IOException e) {
                                                 throw new RuntimeException(e);
                                             }
+                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth,price, bitmap1);
+                                            orderuser.add(order);
 //                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
 //                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth,price, bitmap1);
-                                            orderuser.add(order);
+
 
                                             //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
                                             // Log the address
@@ -153,7 +162,9 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                                         }
                                     }
                                 });
+
                     }
+
                 }
 
 
@@ -164,8 +175,7 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
 
             }
         });
-        //Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
-//        orderuser.add(a);
+
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
 //        orderuser.remove(a);

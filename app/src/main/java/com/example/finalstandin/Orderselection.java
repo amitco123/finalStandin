@@ -85,6 +85,7 @@ public class Orderselection extends AppCompatActivity {
         Intent takeit = getIntent();
         String st = takeit.getStringExtra("date");
         user1 = takeit.getStringExtra("user1");
+        user1= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
         Toast.makeText(Orderselection.this, user1, Toast.LENGTH_SHORT).show();
         date.setText(st);
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
@@ -225,14 +226,14 @@ public class Orderselection extends AppCompatActivity {
                     case R.id.rbYour: {
                         address.setVisibility(View.VISIBLE);
                         loc.setVisibility(View.INVISIBLE);
+                        sendloc = address.getText().toString();
                         getLastLocation();
-                        sendaddress = address.getText().toString();
                     }
                     break;
                     case R.id.rbAnother: {
                         address.setVisibility(View.INVISIBLE);
                         loc.setVisibility(View.VISIBLE);
-                        sendaddress = loc.getText().toString();
+                        sendloc = loc.getText().toString();
                     }
                     break;
                 }
@@ -260,29 +261,29 @@ public class Orderselection extends AppCompatActivity {
                 }
             }
         });
-        rgBtnGroupPlace.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rbAnother: {
-                        flag = true;
-                        address.setVisibility(View.INVISIBLE);
-                        loc.setVisibility(View.VISIBLE);
-                        sendloc= loc.getText().toString();
-                    }
-                    break;
-                    case R.id.rbYour: {
-                        flag = false;
-
-
-                        address.setVisibility(View.VISIBLE);
-                        loc.setVisibility(View.INVISIBLE);
-                        sendloc= address.getText().toString();
-                    }
-                    break;
-                }
-            }
-        });
+//        rgBtnGroupPlace.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+//                switch (checkedId) {
+//                    case R.id.rbAnother: {
+//                        flag = true;
+//                        address.setVisibility(View.INVISIBLE);
+//                        loc.setVisibility(View.VISIBLE);
+//                        sendloc= loc.getText().toString();
+//                    }
+//                    break;
+//                    case R.id.rbYour: {
+//                        flag = false;
+//
+//
+//                        address.setVisibility(View.VISIBLE);
+//                        loc.setVisibility(View.INVISIBLE);
+//                        sendloc= address.getText().toString();
+//                    }
+//                    break;
+//                }
+//            }
+//        });
     }
 
 
@@ -292,47 +293,50 @@ public class Orderselection extends AppCompatActivity {
 
 
     private void getLastLocation() {
-        if (ContextCompat.checkSelfPermission(Orderselection.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation()
-                    .addOnSuccessListener(new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                Geocoder geocoder = new Geocoder(Orderselection.this, Locale.getDefault());
-                                List<Address> addresses = null;
-                                try {
-                                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                    address.setText(" address:" + addresses.get(0).getAddressLine(0));
-
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED)
+        {
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location!=null)
+                    {
+                        Geocoder geocoder= new Geocoder(Orderselection.this,Locale.getDefault());
+                        try {
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1 );
+                            address.setText(" "+ addresses.get(0).getAddressLine(0));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
-                    });
-        } else {
+
+
+                    }
+                }
+            });
+
+        }
+        else {
             askPermission();
         }
     }
 
     private void askPermission() {
-        ActivityCompat.requestPermissions(Orderselection.this, new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+        ActivityCompat.requestPermissions(Orderselection.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if( requestCode==REQUEST_CODE){
+            if( grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 getLastLocation();
-            } else {
-                Toast.makeText(Orderselection.this, "Required Permission", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(this, "Request Permission", Toast.LENGTH_SHORT).show();
             }
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 
