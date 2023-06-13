@@ -1,16 +1,20 @@
 package com.example.finalstandin;
 
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +55,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
     StorageReference storageReference;
     String address,address2="", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
     Bitmap bitmap, bitmap1;
-
+    public String  date22,  time2,  address11,  address22,  name2,  money2,  tol2,  oot2,  fos2,  thereason2,  phone2,  gender2,  how_much_time2,  birth2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,12 +91,13 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                         date = dataSnapshot.getKey();
                         phone = dataSnapshot.getValue().toString();
                         phone = phone.substring(1, 14);
+                        String phone1 = ""+phone;
                         //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
                         String tempdate =""+ date;
-                        storageReference= FirebaseStorage.getInstance().getReference("image/" + phone);
+                        storageReference= FirebaseStorage.getInstance().getReference("image/" + phone1);
 
                         DocumentReference documentRef = db.collection("Users")
-                                .document(phone).collection("Orders")
+                                .document(phone1).collection("Orders")
                                 .document(" " + date);
                         documentRef.get()
                                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -127,7 +133,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
 
                                             // Process the retrieved data
                                             try {
-                                                File localFile = File.createTempFile("" + phone, "jpeg");
+                                                File localFile = File.createTempFile("" + phone1, "jpeg");
                                                 storageReference.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
@@ -143,7 +149,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                                             }
 //                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
 //                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth,price, bitmap1);
+                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth,price, bitmap1);
                                             orderuser.add(order);
 
                                             //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
@@ -223,6 +229,8 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
         imageView1= tempAd.findViewById(R.id.imageView21);
         cancel= tempAd.findViewById(R.id.cancel);
 
+        date22=date;
+        phone2=phone;
 
         date2.setText(date);
         name1.setText(name);
@@ -241,12 +249,40 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    sendSMS();
+                } else  // מבקש אישור לשליחת sms
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
                 databaseReference.child(date).removeValue();
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
                         .document(" " +date).delete();
+                //Toast.makeText(getActivity(), ""+phone2, Toast.LENGTH_LONG).show();
+
             }
         });
 
+    }
+    private void sendSMS() {
+        String phone = phone2;
+        String message =  "היי סליחה אך בסוף ממלא המקום אינו יכול להגיע לפגישה בתאריך" + " "+date22+ " "+"סליחה ויום טוב.";
+
+        if (!phone.isEmpty() && !message.isEmpty()) // בודק האם השדות ריקים
+        {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phone, null, message, null, null); // שליחת ה-sms
+            Toast.makeText(getActivity(), "SMS sent successfully", Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(getActivity(), "please enter the details", Toast.LENGTH_LONG).show();
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) // בודק האם ניתן אישור לשליחה
+            sendSMS();
+        else
+            Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show(); // מודיע שלא ניתן אישור
     }
 }

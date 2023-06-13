@@ -5,10 +5,12 @@ import static android.content.ContentValues.TAG;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +68,7 @@ import java.util.Map;
         StorageReference storageReference;
         String address,address2="", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
         RecyclerView recyclerView1;
+        public String date2="";
 
         @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -184,6 +189,7 @@ import java.util.Map;
         public void onItemLongClick(String date, String id) {
             androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
             builder.setTitle("Delete " + date + " ?");
+            date2 =date;
             builder.setMessage("You are sure that you would like to cancel the meeting, the cancellation fee is 50 shekels " + date + " ?");
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
@@ -194,6 +200,13 @@ import java.util.Map;
 
                     FirebaseFirestore.getInstance().collection("Users")
                             .document("" + FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber()).collection("Orders").document( " " +date).delete();
+
+                    if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        sendSMS();
+                        sendSMS1();
+                    } else  // מבקש אישור לשליחת sms
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
                 }
             });
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -207,5 +220,37 @@ import java.util.Map;
         @Override
         public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
 
+        }
+        private void sendSMS() {
+            String phone = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+            String message =  "היי הזמנתך בתאריך" + " "+ date2+ " "+"בוטלה בהצלחה";
+
+            if (!phone.isEmpty() && !message.isEmpty()) // בודק האם השדות ריקים
+            {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phone, null, message, null, null); // שליחת ה-sms
+                Toast.makeText(getActivity(), "SMS sent successfully", Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(getActivity(), "please enter the details", Toast.LENGTH_LONG).show();
+        }
+        private void sendSMS1() {
+            String phone = "+972587411408";
+            String message =  "היי הזמנת הלקוח בתאריך" + " "+ date2+ " "+"בוטלה והוא יחויב ב50 שקל";
+
+            if (!phone.isEmpty() && !message.isEmpty()) // בודק האם השדות ריקים
+            {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phone, null, message, null, null); // שליחת ה-sms
+                Toast.makeText(getActivity(), "SMS sent successfully", Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(getActivity(), "please enter the details", Toast.LENGTH_LONG).show();
+        }
+
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (requestCode == 100 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) // בודק האם ניתן אישור לשליחה
+                sendSMS();
+            else
+                Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show(); // מודיע שלא ניתן אישור
         }
     }

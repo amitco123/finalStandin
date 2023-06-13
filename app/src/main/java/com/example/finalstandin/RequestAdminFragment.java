@@ -1,16 +1,20 @@
 package com.example.finalstandin;
 
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +54,7 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
     StorageReference storageReference;
     String address,address2="", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
     Bitmap bitmap, bitmap1;
+    public String  date22,  time22,  address11,  address22,  name2,  money2,  tol2,  oot2,  fos2,  thereason2,  phone2,  gender2,  how_much_time2,  birth2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +89,7 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                         phone = dataSnapshot.getValue().toString();
                         phone = ""+phone.substring(1, 14);
                         String phone1 =""+ phone;
+
                         //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
                         String tempdate =""+ date;
 
@@ -201,12 +207,10 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
 
     @Override
     public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
-        TextView date2, name1, age1, phone1, address1,time2, money1,therreason,gender1,OoT,FoS,ToL,how_much_time1;
+        TextView date2, name1, age1, phone1, address1, time2, money1, therreason, gender1, OoT, FoS, ToL, how_much_time1;
         ImageView imageView1;
         Button yes, no;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
-
-
 
 
         AlertDialog.Builder tempBuilder = new AlertDialog.Builder(getContext());
@@ -226,11 +230,18 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
         OoT = tempAd.findViewById(R.id.OoT);
         FoS = tempAd.findViewById(R.id.FoS);
         ToL = tempAd.findViewById(R.id.ToL);
-        how_much_time1= tempAd.findViewById(R.id.how_much_time);
-        imageView1= tempAd.findViewById(R.id.imageView2);
-        yes= tempAd.findViewById(R.id.yes);
-        no= tempAd.findViewById(R.id.no);
+        how_much_time1 = tempAd.findViewById(R.id.how_much_time);
+        imageView1 = tempAd.findViewById(R.id.imageView2);
+        yes = tempAd.findViewById(R.id.yes);
+        no = tempAd.findViewById(R.id.no);
 
+
+        date22 = date;
+        phone2 = phone;
+        time22 = time;
+        address11 = address;
+        money2 = money;
+        how_much_time2 = how_much_time;
         date2.setText(date);
         name1.setText(name);
         age1.setText(birth);
@@ -246,20 +257,70 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
         how_much_time1.setText(how_much_time);
         imageView1.setImageBitmap(image);
         yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                databaseReference.child(date).child(phone).setValue("true");
-            }
-        });
+                                   @Override
+                                   public void onClick(View view) {
+                                       databaseReference.child(date).child(phone).setValue("true");
+                                       if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
+                                               == PackageManager.PERMISSION_GRANTED) {
+                                           sendSMS1();
+                                       } else  // מבקש אישור לשליחת sms
+                                           ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
+                                   }
+                               }
+
+        );
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    sendSMS();
+                    //  Toast.makeText(getActivity(), "a", Toast.LENGTH_SHORT).show();
+                } else  // מבקש אישור לשליחת sms
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
+            }
+        });
                 databaseReference.child(date).removeValue();
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
                         .document(" " +date).delete();
-            }});
+
+    }
+
+
+    private void sendSMS() {
+        String phone = phone2;
+        String message =  "היי סליחה אך בסוף ממלא המקום אינו יכול בתאריך" + " "+date22+ " ";
+
+        if (!phone.isEmpty() && !message.isEmpty()) // בודק האם השדות ריקים
+        {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phone, null, message, null, null); // שליחת ה-sms
+            Toast.makeText(getActivity(), "SMS sent successfully", Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(getActivity(), "please enter the details", Toast.LENGTH_LONG).show();
+    }
+    private void sendSMS1() {
+        String phone = phone2;
+        String message =  "היי הזמנה בתאריך" + " "+date22+ " "+  "אושרה, בשעה:" + " "+time22+ " "+ "במקום:" + " "+ address11;
+
+// " בהמשך  "
+        if (!phone.isEmpty() && !message.isEmpty()) // בודק האם השדות ריקים
+        {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phone, null, message, null, null); // שליחת ה-sms
+            Toast.makeText(getActivity(), "SMS sent successfully", Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(getActivity(), "please enter the details", Toast.LENGTH_LONG).show();
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) // בודק האם ניתן אישור לשליחה
+            sendSMS();
+        else
+            Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show(); // מודיע שלא ניתן אישור
     }
 }
 
