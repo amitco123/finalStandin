@@ -1,6 +1,7 @@
 package com.example.finalstandin;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -263,6 +264,8 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                                        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
                                                == PackageManager.PERMISSION_GRANTED) {
                                            sendSMS1();
+                                           Intent intent = new Intent(getActivity(), MainActivity2.class);
+                                           startActivity(intent);
                                        } else  // מבקש אישור לשליחת sms
                                            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
                                    }
@@ -276,15 +279,19 @@ public class RequestAdminFragment extends Fragment  implements SelectListener {
                 if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
                         == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
+                    Intent intent = new Intent(getActivity(), MainActivity2.class);
+                    startActivity(intent);
                     //  Toast.makeText(getActivity(), "a", Toast.LENGTH_SHORT).show();
                 } else  // מבקש אישור לשליחת sms
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
-            }
-        });
                 databaseReference.child(date).removeValue();
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
                         .document(" " +date).delete();
+            }
+
+        });
+
 
     }
 

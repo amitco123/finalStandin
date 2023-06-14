@@ -76,25 +76,23 @@ import java.util.Map;
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_review, container, false);
 
-
-            firestore= FirebaseFirestore.getInstance();
+            firestore = FirebaseFirestore.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
             orderuser = new ArrayList<>();
             orderuser.clear();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-             recyclerView1= view.findViewById(R.id.recyclerView1);
-            recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
+            RecyclerView recyclerView12 = view.findViewById(R.id.recyclerView1);
+            recyclerView12.setLayoutManager(new LinearLayoutManager(getContext()));
 
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         st = dataSnapshot.getValue().toString();
                         st = st.substring(15, 19);
-                        //Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
 
 
                         if (st.equals("true")) {
@@ -103,13 +101,9 @@ import java.util.Map;
                             date = dataSnapshot.getKey();
                             phone = dataSnapshot.getValue().toString();
                             phone = phone.substring(1, 14);
-                            String phone1 = ""+phone;
-                            //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
+                            String phone1 = "" + phone;
                             String tempdate = "" + date;
-                            storageReference = FirebaseStorage.getInstance().getReference("image/" + phone1);
-                            //Toast.makeText(getContext(),  ","+FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(), Toast.LENGTH_SHORT).show();
                             if (phone1.equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
-                                //Toast.makeText(getContext(), phone+ ","+FirebaseAuth.getInstance().getCurrentUser().toString(), Toast.LENGTH_SHORT).show();
                                 DocumentReference documentRef = db.collection("Users")
                                         .document(phone1).collection("Orders")
                                         .document(" " + date);
@@ -122,29 +116,9 @@ import java.util.Map;
                                                     address = documentSnapshot.getString("address of the place of the meeting");
                                                     //address2 = documentSnapshot.getString("address of the place of the Trap");
                                                     time = documentSnapshot.getString("Time of meeting");
-//                                                    how_much_time = documentSnapshot.getString("how much time");
-//                                                    if (how_much_time.equals("seven"))
-//                                                        price = "400";
-//                                                    else if (how_much_time.equals("six")) {
-//                                                        price = "350";
-//                                                    } else if (how_much_time.equals("five"))
-//                                                        price = "315";
-//                                                    else if (how_much_time.equals("four"))
-//                                                        price = "275";
-//                                                    else if (how_much_time.equals("there"))
-//                                                        price = "225";
-//                                                    else if (how_much_time.equals("two"))
-//                                                        price = "175";
-//                                                    else if(how_much_time.equals("one"))
-//                                                        price = "100";
-
-                                                    // Process the retrieved data
-//                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
-//                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
                                                     Order order = new Order(address, null, null, tempdate, null, null, null, thereason, null, null, time, how_much_time, null, price, null);
                                                     orderuser.add(order);
 
-                                                    //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
                                                     // Log the address
                                                     Log.d("FirestoreData", "Address: " + address);
                                                 } else {
@@ -165,27 +139,22 @@ import java.util.Map;
 
                 }
             });
-            //Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
-//        orderuser.add(a);
             Runnable mRunnable2;
             Handler mHandler2 = new Handler();
-//        orderuser.remove(a);
             mRunnable2 = new Runnable() {
                 @Override
                 public void run() {
 
                     // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                    CustomAdapterAdmin2 customAdapterAdmin = new CustomAdapterAdmin2(getContext(),orderuser,ReviewFragment.this, getActivity());
-                    recyclerView1.setAdapter(customAdapterAdmin);
+                    CustomAdapterAdmin2 customAdapterAdmin = new CustomAdapterAdmin2(getContext(), orderuser, ReviewFragment.this, getActivity());
+                    recyclerView12.setAdapter(customAdapterAdmin);
                 }
             };
             mHandler2.postDelayed(mRunnable2, 3 * 1000);//Execute after 10 Seconds
 
 
-
             return view;
-        }
-        @Override
+        }        @Override
         public void onItemLongClick(String date, String id) {
             androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
             builder.setTitle("Delete " + date + " ?");
@@ -205,6 +174,8 @@ import java.util.Map;
                             == PackageManager.PERMISSION_GRANTED) {
                         sendSMS();
                         sendSMS1();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
                     } else  // מבקש אישור לשליחת sms
                         ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
                 }
@@ -212,6 +183,8 @@ import java.util.Map;
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
 
                 }
             });

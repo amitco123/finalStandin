@@ -84,7 +84,6 @@ public class Orderselection extends AppCompatActivity {
         date = findViewById(R.id.textView1);
         Intent takeit = getIntent();
         String st = takeit.getStringExtra("date");
-        user1 = takeit.getStringExtra("user1");
         user1= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
         Toast.makeText(Orderselection.this, user1, Toast.LENGTH_SHORT).show();
         date.setText(st);
@@ -261,36 +260,7 @@ public class Orderselection extends AppCompatActivity {
                 }
             }
         });
-//        rgBtnGroupPlace.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-//                switch (checkedId) {
-//                    case R.id.rbAnother: {
-//                        flag = true;
-//                        address.setVisibility(View.INVISIBLE);
-//                        loc.setVisibility(View.VISIBLE);
-//                        sendloc= loc.getText().toString();
-//                    }
-//                    break;
-//                    case R.id.rbYour: {
-//                        flag = false;
-//
-//
-//                        address.setVisibility(View.VISIBLE);
-//                        loc.setVisibility(View.INVISIBLE);
-//                        sendloc= address.getText().toString();
-//                    }
-//                    break;
-//                }
-//            }
-//        });
     }
-
-
-
-
-
-
 
     private void getLastLocation() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED)
@@ -376,13 +346,6 @@ public class Orderselection extends AppCompatActivity {
                                     name = documentSnapshot.getString("name");
                                     gender = documentSnapshot.getString("gender");
                                     birth = documentSnapshot.getString("date");
-                                    // Access other fields as needed
-//                                            String field2 = documentSnapshot.getString("field2");
-//                                            int field3 = documentSnapshot.getLong("field3").intValue();
-                                    // Process the retrieved data
-                                    //Toast.makeText(getContext(), address, Toast.LENGTH_SHORT).show();
-                                    // Log the address
-                                    //Toast.makeText(getContext(), address  + " "+ how_much_time  + " "+ time  + " "+thereason, Toast.LENGTH_SHORT).show();
                                     hashMap1.put("name", name);
                                     hashMap1.put("gender", gender);
                                     hashMap1.put("birth", birth);
@@ -452,13 +415,6 @@ public class Orderselection extends AppCompatActivity {
                                     name = documentSnapshot.getString("name");
                                     gender = documentSnapshot.getString("gender");
                                     birth = documentSnapshot.getString("date");
-                                    // Access other fields as needed
-//                                            String field2 = documentSnapshot.getString("field2");
-//                                            int field3 = documentSnapshot.getLong("field3").intValue();
-                                    // Process the retrieved data
-                                    //Toast.makeText(getContext(), address, Toast.LENGTH_SHORT).show();
-                                    // Log the address
-                                    //Toast.makeText(getContext(), address  + " "+ how_much_time  + " "+ time  + " "+thereason, Toast.LENGTH_SHORT).show();
                                     hashMap1.put("name", name);
                                     hashMap1.put("gender", gender);
                                     hashMap1.put("birth", birth);

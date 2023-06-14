@@ -57,7 +57,6 @@ public class OrderFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), Orderselection.class);
                 String date=textView.getText().toString();
                 intent.putExtra("date",date);
-                intent.putExtra("user1",user1);
                 startActivity(intent);
             }
         });

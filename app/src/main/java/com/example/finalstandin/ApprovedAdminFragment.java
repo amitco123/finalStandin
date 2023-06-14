@@ -1,6 +1,7 @@
 package com.example.finalstandin;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -253,6 +254,8 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                 if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
                         == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
+                    Intent intent = new Intent(getActivity(), MainActivity2.class);
+                    startActivity(intent);
                 } else  // מבקש אישור לשליחת sms
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
                 databaseReference.child(date).removeValue();

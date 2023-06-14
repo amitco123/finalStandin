@@ -78,7 +78,6 @@ public class HomeFragment extends Fragment implements SelectListener {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     st = dataSnapshot.getValue().toString();
                     st = st.substring(15, 19);
-                    //Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
 
 
                     if (st.equals("wait")) {
@@ -88,12 +87,8 @@ public class HomeFragment extends Fragment implements SelectListener {
                         phone = dataSnapshot.getValue().toString();
                         phone = phone.substring(1, 14);
                         String phone1 = "" + phone;
-                        //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
                         String tempdate = "" + date;
-                        storageReference = FirebaseStorage.getInstance().getReference("image/" + phone1);
-                        //Toast.makeText(getContext(),  ","+FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(), Toast.LENGTH_SHORT).show();
                         if (phone1.equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
-                            //Toast.makeText(getContext(), phone+ ","+FirebaseAuth.getInstance().getCurrentUser().toString(), Toast.LENGTH_SHORT).show();
                             DocumentReference documentRef = db.collection("Users")
                                     .document(phone1).collection("Orders")
                                     .document(" " + date);
@@ -106,29 +101,11 @@ public class HomeFragment extends Fragment implements SelectListener {
                                                 address = documentSnapshot.getString("address of the place of the meeting");
                                                 //address2 = documentSnapshot.getString("address of the place of the Trap");
                                                 time = documentSnapshot.getString("Time of meeting");
-//                                                    how_much_time = documentSnapshot.getString("how much time");
-//                                                    if (how_much_time.equals("seven"))
-//                                                        price = "400";
-//                                                    else if (how_much_time.equals("six")) {
-//                                                        price = "350";
-//                                                    } else if (how_much_time.equals("five"))
-//                                                        price = "315";
-//                                                    else if (how_much_time.equals("four"))
-//                                                        price = "275";
-//                                                    else if (how_much_time.equals("there"))
-//                                                        price = "225";
-//                                                    else if (how_much_time.equals("two"))
-//                                                        price = "175";
-//                                                    else if(how_much_time.equals("one"))
-//                                                        price = "100";
 
                                                 // Process the retrieved data
-//                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
-//                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                                                Order order = new Order(address, null, null, tempdate, null, null, null, thereason, null, null, time, how_much_time, null, price, null);
+                                                Order order = new Order(address, null, null, tempdate, null, null, null, thereason, null, null, time, how_much_time, null, null, null);
                                                 orderuser.add(order);
 
-                                                //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
                                                 // Log the address
                                                 Log.d("FirestoreData", "Address: " + address);
                                             } else {
@@ -149,22 +126,17 @@ public class HomeFragment extends Fragment implements SelectListener {
 
             }
         });
-        //Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
-//        orderuser.add(a);
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
-//        orderuser.remove(a);
         mRunnable2 = new Runnable() {
             @Override
             public void run() {
 
-                // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
                 CustomAdapterAdmin2 customAdapterAdmin = new CustomAdapterAdmin2(getContext(), orderuser, HomeFragment.this, getActivity());
                 recyclerView12.setAdapter(customAdapterAdmin);
             }
         };
         mHandler2.postDelayed(mRunnable2, 3 * 1000);//Execute after 10 Seconds
-
 
         return view;
     }
@@ -188,15 +160,19 @@ public class HomeFragment extends Fragment implements SelectListener {
                 if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
                         == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
                 } else  // מבקש אישור לשליחת sms
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
+
             }
 
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
         builder.create().show();
