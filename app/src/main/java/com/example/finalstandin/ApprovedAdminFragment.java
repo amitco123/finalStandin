@@ -1,10 +1,12 @@
 package com.example.finalstandin;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -115,7 +117,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                                             time = documentSnapshot.getString("Time of meeting");
                                             how_much_time = documentSnapshot.getString("how much time");
                                             name = documentSnapshot.getString("name");
-                                            name2= ""+ name;
+                                            name2 = "" + name;
                                             gender = documentSnapshot.getString("gender");
                                             birth = documentSnapshot.getString("birth");
                                             if (how_much_time.equals("seven"))
@@ -147,13 +149,11 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                                                         if (task.isSuccessful()) {
 
                                                             Bitmap bitmap2 = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                            if(nod2==null)
-                                                            {
-                                                                nod2 = new Node<>(new picUser(""+phone1,bitmap2));
-                                                            }
-                                                            else{
-                                                                Node <picUser> temp = getLastNode(nod2);
-                                                                temp.setNext(new Node<>(new picUser(""+phone1,bitmap2)));
+                                                            if (nod2 == null) {
+                                                                nod2 = new Node<>(new picUser("" + phone1, bitmap2));
+                                                            } else {
+                                                                Node<picUser> temp = getLastNode(nod2);
+                                                                temp.setNext(new Node<>(new picUser("" + phone1, bitmap2)));
                                                             }
 
                                                         }
@@ -163,7 +163,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                                             } catch (IOException e) {
                                                 throw new RuntimeException(e);
                                             }
-                                            Order order = new Order(address, address2,name2, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth, price, null);
+                                            Order order = new Order(address, address2, name2, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth, price, null);
                                             orderuser.add(order);
 //                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
 //                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
@@ -219,7 +219,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
     public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
         TextView date2, name1, age1, phone1, address1, time2, money1, therreason, gender1, OoT, FoS, ToL, how_much_time1;
         ImageView imageView1;
-        Button cancel;
+        Button cancel, go;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
 
@@ -243,7 +243,6 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
         how_much_time1 = tempAd.findViewById(R.id.how_much_time1);
         imageView1 = tempAd.findViewById(R.id.imageView21);
         cancel = tempAd.findViewById(R.id.cancel);
-
         date22 = date;
         phone2 = phone;
 
@@ -261,6 +260,32 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
         ToL.setText(tol);
         how_much_time1.setText(how_much_time);
         imageView1.setImageBitmap(image);
+
+        phone1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://api.whatsapp.com/send?phone=" + phone;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        address1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    // Launch Waze to look for Hawaii:
+                    String url = "https://waze.com/ul?q=" + address + "&navigate=yes";
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } catch (ActivityNotFoundException ex) {
+                    // If Waze is not installed, open it in Google Play:
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
+                    startActivity(intent);
+                }
+            }
+        });
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

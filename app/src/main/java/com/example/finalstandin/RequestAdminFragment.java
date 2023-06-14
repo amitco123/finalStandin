@@ -1,10 +1,12 @@
 package com.example.finalstandin;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -217,7 +219,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
     public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
         TextView date2, name1, age1, phone1, address1, time2, money1, therreason, gender1, OoT, FoS, ToL, how_much_time1;
         ImageView imageView1;
-        Button yes, no;
+        Button yes, no ,go;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
 
@@ -264,6 +266,31 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
         ToL.setText(tol);
         how_much_time1.setText(how_much_time);
         imageView1.setImageBitmap(image);
+        phone1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://api.whatsapp.com/send?phone=" + phone;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        address1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    // Launch Waze to look for Hawaii:
+                    String url = "https://waze.com/ul?q=" + address + "&navigate=yes";
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } catch (ActivityNotFoundException ex) {
+                    // If Waze is not installed, open it in Google Play:
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
+                    startActivity(intent);
+                }
+
+            }
+        });
         yes.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View view) {
