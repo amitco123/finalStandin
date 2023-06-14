@@ -9,15 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.MyViewHolder> {
+public class CustomAdapterAdmin1 extends RecyclerView.Adapter<CustomAdapterAdmin1.MyViewHolder> {
 
     private Context context;
     private Activity activity;
@@ -25,7 +23,7 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
     private SelectListener listener;
 
 
-    CustomAdapterAdmin(Context context, ArrayList<Order> orders, SelectListener listener, Activity activity) { //ArrayList<String> date, ArrayList<String> time, ArrayList<String> address , ArrayList<String> name , ArrayList<String> money , ArrayList<String> tol , ArrayList<String> oot ,ArrayList<String> fos , ArrayList<String> thereason, ArrayList<String> phone , ArrayList<String> gender , ArrayList<String> how_much_time ,ArrayList<String> birth ,ArrayList<Bitmap> imageView){
+    CustomAdapterAdmin1(Context context, ArrayList<Order> orders, SelectListener listener, Activity activity) { //ArrayList<String> date, ArrayList<String> time, ArrayList<String> address , ArrayList<String> name , ArrayList<String> money , ArrayList<String> tol , ArrayList<String> oot ,ArrayList<String> fos , ArrayList<String> thereason, ArrayList<String> phone , ArrayList<String> gender , ArrayList<String> how_much_time ,ArrayList<String> birth ,ArrayList<Bitmap> imageView){
 
         this.context = context;
         this.orders = orders;
@@ -49,7 +47,7 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
         holder.address.setText((orders.get(position).getAddress()));
 
         //  holder.imageView.setImageBitmap(orders.get(position).getBitmap());
-        Bitmap bitmap= RequestAdminFragment.getBitmapFromName(""+orders.get(position).getPhone());
+        Bitmap bitmap= ApprovedAdminFragment.getBitmapFromName(""+orders.get(position).getPhone());
         if (bitmap!=null)
         {
             holder.imageView.setImageBitmap(bitmap);

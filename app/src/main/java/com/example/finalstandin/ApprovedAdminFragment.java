@@ -56,6 +56,8 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
     StorageReference storageReference;
     String address,address2="", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
     Bitmap bitmap, bitmap1;
+    public static Node<picUser> node;
+
     public String  date22,  time2,  address11,  address22,  name2,  money2,  tol2,  oot2,  fos2,  thereason2,  phone2,  gender2,  how_much_time2,  birth2;
 
     @Override
@@ -139,8 +141,15 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                                                     @Override
                                                     public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
                                                         if (task.isSuccessful()) {
-                                                            bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                            bitmap1 =bitmap;
+                                                            Bitmap bitmap2 = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                            if(node==null)
+                                                            {
+                                                                node = new Node<>(new picUser(""+phone1,bitmap2));
+                                                            }
+                                                            else{
+                                                                Node <picUser> temp = getLastNode(node);
+                                                                temp.setNext(new Node<>(new picUser(""+phone1,bitmap2)));
+                                                            }
                                                         }
                                                     }
 
@@ -150,7 +159,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                                             }
 //                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
 //                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth,price, bitmap1);
+                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth,price, null);
                                             orderuser.add(order);
 
                                             //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
@@ -287,5 +296,36 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
             sendSMS();
         else
             Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show(); // מודיע שלא ניתן אישור
+    }
+
+
+
+    public static Bitmap getBitmapFromName(String name, Node<picUser> node) {
+        Node<picUser> g = node;
+        while (g != null && g.getValue() != null && !g.getValue().getPhone().equals(name))
+            g = g.getNext();
+
+        if (g == null || g.getValue() == null) {
+            return null;
+        }
+        return g.getValue().getBitmap();
+    }
+
+    public static Bitmap getBitmapFromName(String name) {
+        Node<picUser> g = node;
+        while (g != null && g.getValue() != null && !g.getValue().getPhone().equals(name))
+            g = g.getNext();
+
+        if (g == null || g.getValue() == null) {
+            return null;
+        }
+        return g.getValue().getBitmap();
+    }
+
+    public static Node<picUser> getLastNode(Node<picUser> node) {
+        Node<picUser> n = node;
+        while (n.getNext() != null)
+            n = n.getNext();
+        return n;
     }
 }

@@ -320,10 +320,7 @@ public class Orderselection extends AppCompatActivity {
                 Toast.makeText(this, "something is missing", Toast.LENGTH_SHORT).show();
             } else {
                 sendloc = " ";
-                MyDatabaseHelper myDB = new MyDatabaseHelper(Orderselection.this);
-                myDB.addBook(Time.trim(),
-                        senddate.trim(),
-                        st9.trim(), sendloc1.trim());
+
                 //            Time, sendloc1 ,senddate,RdbOoT,RdbFoS,RdbToL,s9,sendhowmuchtime
                 databaseReference.child(senddate).child(user1).setValue("wait");
                 HashMap<String, Object> hashMap1 = new HashMap<>();
@@ -389,10 +386,7 @@ public class Orderselection extends AppCompatActivity {
             if (Time.equals("select time of meeting") || sendloc1.equals("") || senddate.equals("") || st9.equals("") || sendloc.equals("")) {
                 Toast.makeText(this, "something is missing", Toast.LENGTH_SHORT).show();
             } else {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(Orderselection.this);
-                myDB.addBook(Time.trim(),
-                        senddate.trim(),
-                        st9.trim(), sendloc1.trim());
+
                 //            Time, sendloc1 ,senddate,RdbOoT,RdbFoS,RdbToL,s9,sendhowmuchtime
                 databaseReference.child(senddate).child(user1).setValue("wait");
                 HashMap<String, Object> hashMap1 = new HashMap<>();

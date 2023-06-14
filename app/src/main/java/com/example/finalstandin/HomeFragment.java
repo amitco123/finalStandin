@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment implements SelectListener {
     ImageView empty_imageview;
     TextView no_data;
     String user1;
-    MyDatabaseHelper myDB;
+
     CustomAdapter customAdapter;
 
     @Override
