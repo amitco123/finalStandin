@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CustomAdapterAdmin1 extends RecyclerView.Adapter<CustomAdapterAdmin1.MyViewHolder> {
+public class CustomAdapterAdminForApproved extends RecyclerView.Adapter<CustomAdapterAdminForApproved.MyViewHolder> {
 
     private Context context;
     private Activity activity;
@@ -23,7 +23,7 @@ public class CustomAdapterAdmin1 extends RecyclerView.Adapter<CustomAdapterAdmin
     private SelectListener listener;
 
 
-    CustomAdapterAdmin1(Context context, ArrayList<Order> orders, SelectListener listener, Activity activity) { //ArrayList<String> date, ArrayList<String> time, ArrayList<String> address , ArrayList<String> name , ArrayList<String> money , ArrayList<String> tol , ArrayList<String> oot ,ArrayList<String> fos , ArrayList<String> thereason, ArrayList<String> phone , ArrayList<String> gender , ArrayList<String> how_much_time ,ArrayList<String> birth ,ArrayList<Bitmap> imageView){
+    CustomAdapterAdminForApproved(Context context, ArrayList<Order> orders, SelectListener listener, Activity activity) { //ArrayList<String> date, ArrayList<String> time, ArrayList<String> address , ArrayList<String> name , ArrayList<String> money , ArrayList<String> tol , ArrayList<String> oot ,ArrayList<String> fos , ArrayList<String> thereason, ArrayList<String> phone , ArrayList<String> gender , ArrayList<String> how_much_time ,ArrayList<String> birth ,ArrayList<Bitmap> imageView){
 
         this.context = context;
         this.orders = orders;
@@ -52,6 +52,9 @@ public class CustomAdapterAdmin1 extends RecyclerView.Adapter<CustomAdapterAdmin
         {
             holder.imageView.setImageBitmap(bitmap);
         }
+//        else {
+//            Toast.makeText(context, "EE", Toast.LENGTH_SHORT).show();
+//        }
 
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +81,7 @@ public class CustomAdapterAdmin1 extends RecyclerView.Adapter<CustomAdapterAdmin
                             Gender = orders.get(holder.getAdapterPosition()).getGender();
                             How_much_time = orders.get(holder.getAdapterPosition()).getHow_much_time();
                             Birth = orders.get(holder.getAdapterPosition()).getBirth();
-                            bitmap = RequestAdminFragment.getBitmapFromName(""+Phone);
+                            bitmap = ApprovedAdminFragment.getBitmapFromName(""+Phone);
                             listener.onClick(Date, Time, Address, Adress2, Name, Price, Tol, Oot, Fos, Thereason, Phone, Gender, How_much_time, Birth, bitmap);
                             //Toast.makeText(context, ", "+Date , Toast.LENGTH_LONG).show();
 

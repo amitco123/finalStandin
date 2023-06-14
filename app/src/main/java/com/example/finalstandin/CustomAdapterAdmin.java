@@ -54,6 +54,9 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
         {
             holder.imageView.setImageBitmap(bitmap);
         }
+//        else {
+//            Toast.makeText(context, "EE", Toast.LENGTH_SHORT).show();
+//        }
 
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {

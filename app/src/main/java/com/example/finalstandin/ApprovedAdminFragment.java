@@ -47,42 +47,40 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class ApprovedAdminFragment extends Fragment  implements SelectListener {
+public class ApprovedAdminFragment extends Fragment implements SelectListener {
 
     View view;
     private DatabaseReference databaseReference;
     private ArrayList<Order> orderuser;
     FirebaseFirestore firestore;
     StorageReference storageReference;
-    String address,address2="", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
+    String address, address2 = "", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
     Bitmap bitmap, bitmap1;
-    public static Node<picUser> node;
+    public static Node<picUser> nod2;
+    public String date22, time22, address11, address22, name2, money2, tol2, oot2, fos2, thereason2, phone2, gender2, how_much_time2, birth2;
 
-    public String  date22,  time2,  address11,  address22,  name2,  money2,  tol2,  oot2,  fos2,  thereason2,  phone2,  gender2,  how_much_time2,  birth2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =inflater.inflate(R.layout.fragment_approved_admin, container, false);
+        view = inflater.inflate(R.layout.fragment_approved_admin, container, false);
 
-
-
-        firestore= FirebaseFirestore.getInstance();
+        firestore = FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
         orderuser = new ArrayList<>();
         orderuser.clear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        RecyclerView recyclerView1= view.findViewById(R.id.recyclerView1);
+        RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView11);
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     st = dataSnapshot.getValue().toString();
                     st = st.substring(15, 19);
                     //Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
@@ -93,14 +91,15 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
 
                         date = dataSnapshot.getKey();
                         phone = dataSnapshot.getValue().toString();
-                        phone = phone.substring(1, 14);
-                        String phone1 = ""+phone;
+                        phone = "" + phone.substring(1, 14);
+                        String phone1 = "" + phone;
+
                         //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
-                        String tempdate =""+ date;
-                        storageReference= FirebaseStorage.getInstance().getReference("image/" + phone1);
+                        String tempdate = "" + date;
+
 
                         DocumentReference documentRef = db.collection("Users")
-                                .document(phone1).collection("Orders")
+                                .document("" + phone1).collection("Orders")
                                 .document(" " + date);
                         documentRef.get()
                                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -116,40 +115,47 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                                             time = documentSnapshot.getString("Time of meeting");
                                             how_much_time = documentSnapshot.getString("how much time");
                                             name = documentSnapshot.getString("name");
+                                            name2= ""+ name;
                                             gender = documentSnapshot.getString("gender");
                                             birth = documentSnapshot.getString("birth");
                                             if (how_much_time.equals("seven"))
-                                                price="400";
+                                                price = "400";
                                             else if (how_much_time.equals("six")) {
-                                                price="350";
-                                            }
-                                            else if(how_much_time.equals("five"))
-                                                price="315";
-                                            else if(how_much_time.equals("four"))
-                                                price="275";
-                                            else if(how_much_time.equals("there"))
-                                                price="225";
-                                            else if(how_much_time.equals("two"))
-                                                price="175";
+                                                price = "350";
+                                            } else if (how_much_time.equals("five"))
+                                                price = "315";
+                                            else if (how_much_time.equals("four"))
+                                                price = "275";
+                                            else if (how_much_time.equals("there"))
+                                                price = "225";
+                                            else if (how_much_time.equals("two"))
+                                                price = "175";
                                             else
-                                                price="100";
+                                                price = "100";
+
 
                                             // Process the retrieved data
                                             try {
-                                                File localFile = File.createTempFile("" + phone1, "jpeg");
+                                                //Toast.makeText(getActivity(), " "+phone1, Toast.LENGTH_SHORT).show();
+                                                storageReference = FirebaseStorage.getInstance().getReference("image/" + phone1);
+                                                File localFile = File.createTempFile(phone1, "jpeg");
+
+
                                                 storageReference.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
                                                         if (task.isSuccessful()) {
+
                                                             Bitmap bitmap2 = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                            if(node==null)
+                                                            if(nod2==null)
                                                             {
-                                                                node = new Node<>(new picUser(""+phone1,bitmap2));
+                                                                nod2 = new Node<>(new picUser(""+phone1,bitmap2));
                                                             }
                                                             else{
-                                                                Node <picUser> temp = getLastNode(node);
+                                                                Node <picUser> temp = getLastNode(nod2);
                                                                 temp.setNext(new Node<>(new picUser(""+phone1,bitmap2)));
                                                             }
+
                                                         }
                                                     }
 
@@ -157,22 +163,24 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                                             } catch (IOException e) {
                                                 throw new RuntimeException(e);
                                             }
+                                            Order order = new Order(address, address2,name2, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth, price, null);
+                                            orderuser.add(order);
 //                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
 //                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                                            Order order=new Order(address,address2, name, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth,price, null);
-                                            orderuser.add(order);
+
 
                                             //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
                                             // Log the address
                                             Log.d("FirestoreData", "Address: " + address);
-                                        }
-                                        else {
+                                        } else {
                                             //Toast.makeText(getContext(), "dos", Toast.LENGTH_SHORT).show();
                                             Log.d("FirestoreData", "Document does not exist");
                                         }
                                     }
                                 });
+
                     }
+
                 }
 
 
@@ -183,8 +191,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
 
             }
         });
-        //Order a=new Order("a", "a","a","a" , "a", "a", "a", "a", "a", "a", "a", "a", "a","a", null);
-//        orderuser.add(a);
+
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
 //        orderuser.remove(a);
@@ -193,16 +200,16 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
             public void run() {
 
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getContext(),orderuser,ApprovedAdminFragment.this, getActivity());
+                CustomAdapterAdminForApproved customAdapterAdmin = new CustomAdapterAdminForApproved(getContext(), orderuser, ApprovedAdminFragment.this, getActivity());
                 recyclerView1.setAdapter(customAdapterAdmin);
             }
         };
         mHandler2.postDelayed(mRunnable2, 3 * 1000);//Execute after 10 Seconds
 
 
-
         return view;
     }
+
     @Override
     public void onItemLongClick(String date, String id) {
 
@@ -210,12 +217,10 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
 
     @Override
     public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
-        TextView date2, name1, age1, phone1, address1,time2, money1,therreason,gender1,OoT,FoS,ToL,how_much_time1;
+        TextView date2, name1, age1, phone1, address1, time2, money1, therreason, gender1, OoT, FoS, ToL, how_much_time1;
         ImageView imageView1;
         Button cancel;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
-
-
 
 
         AlertDialog.Builder tempBuilder = new AlertDialog.Builder(getContext());
@@ -235,12 +240,12 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
         OoT = tempAd.findViewById(R.id.OoT1);
         FoS = tempAd.findViewById(R.id.FoS1);
         ToL = tempAd.findViewById(R.id.ToL1);
-        how_much_time1= tempAd.findViewById(R.id.how_much_time1);
-        imageView1= tempAd.findViewById(R.id.imageView21);
-        cancel= tempAd.findViewById(R.id.cancel);
+        how_much_time1 = tempAd.findViewById(R.id.how_much_time1);
+        imageView1 = tempAd.findViewById(R.id.imageView21);
+        cancel = tempAd.findViewById(R.id.cancel);
 
-        date22=date;
-        phone2=phone;
+        date22 = date;
+        phone2 = phone;
 
         date2.setText(date);
         name1.setText(name);
@@ -270,16 +275,17 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
                 databaseReference.child(date).removeValue();
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
-                        .document(" " +date).delete();
+                        .document(" " + date).delete();
                 //Toast.makeText(getActivity(), ""+phone2, Toast.LENGTH_LONG).show();
 
             }
         });
 
     }
+
     private void sendSMS() {
         String phone = phone2;
-        String message =  "היי סליחה אך בסוף ממלא המקום אינו יכול להגיע לפגישה בתאריך" + " "+date22+ " "+"סליחה ויום טוב.";
+        String message = "היי סליחה אך בסוף ממלא המקום אינו יכול להגיע לפגישה בתאריך" + " " + date22 + " " + "סליחה ויום טוב.";
 
         if (!phone.isEmpty() && !message.isEmpty()) // בודק האם השדות ריקים
         {
@@ -299,9 +305,8 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
     }
 
 
-
-    public static Bitmap getBitmapFromName(String name, Node<picUser> node) {
-        Node<picUser> g = node;
+    public static Bitmap getBitmapFromName(String name, Node<picUser> nod2) {
+        Node<picUser> g = nod2;
         while (g != null && g.getValue() != null && !g.getValue().getPhone().equals(name))
             g = g.getNext();
 
@@ -312,7 +317,7 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
     }
 
     public static Bitmap getBitmapFromName(String name) {
-        Node<picUser> g = node;
+        Node<picUser> g = nod2;
         while (g != null && g.getValue() != null && !g.getValue().getPhone().equals(name))
             g = g.getNext();
 
@@ -322,10 +327,11 @@ public class ApprovedAdminFragment extends Fragment  implements SelectListener {
         return g.getValue().getBitmap();
     }
 
-    public static Node<picUser> getLastNode(Node<picUser> node) {
-        Node<picUser> n = node;
+    public static Node<picUser> getLastNode(Node<picUser> nod2) {
+        Node<picUser> n = nod2;
         while (n.getNext() != null)
             n = n.getNext();
         return n;
     }
+
 }
