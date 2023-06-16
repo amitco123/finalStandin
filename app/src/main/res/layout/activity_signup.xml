@@ -27,13 +27,12 @@
         android:id="@+id/Signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
+        android:text="Sign up"
         android:textSize="30dp"
-        android:layout_centerHorizontal="true"
-        android:visibility="visible"
-        />
+        android:visibility="visible" />
 
 
     <!--        android:drawableLeft="@drawable/ic_baseline_person_outline_24"-->
@@ -85,8 +84,7 @@
         android:layout_below="@+id/textbirth"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        >
+        android:layout_marginEnd="20dp">
 
         <RadioButton
             android:id="@+id/male"
@@ -94,8 +92,7 @@
             android:layout_height="64dp"
             android:text="male"
             android:textColor="@color/white"
-            android:textSize="25sp"
-            />
+            android:textSize="25sp" />
         <!--            android:visibility="invisible"-->
 
         <RadioButton
@@ -104,8 +101,7 @@
             android:layout_height="64dp"
             android:text="female"
             android:textColor="@color/white"
-            android:textSize="25sp"
-            />
+            android:textSize="25sp" />
         <!--            android:visibility="invisible"-->
     </RadioGroup>
 
@@ -119,8 +115,7 @@
         android:layout_marginTop="20dp"
         android:text="date of barth:"
         android:textColor="@color/white"
-        android:textSize="20dp"
-        />
+        android:textSize="20dp" />
     <!--        android:visibility="invisible"/>-->
 
     <Button

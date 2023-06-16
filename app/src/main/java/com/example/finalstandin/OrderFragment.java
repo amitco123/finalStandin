@@ -41,7 +41,7 @@ public class OrderFragment extends Fragment {
         button = view.findViewById(R.id.button1);
         calendarView = view.findViewById(R.id.calendarView);
         textView = view.findViewById(R.id.textView);
-        //calendarView.setMinDate(System.currentTimeMillis() - 1000);
+        calendarView.setMinDate(System.currentTimeMillis() - 1000);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int day, int month, int year) {
