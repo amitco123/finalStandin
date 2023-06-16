@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity {
     FirebaseAuth mAuth;
     String verificationID;
     ProgressBar bar;
-    public static String user1 ="";
+    public static String user1 = "";
     private DatabaseReference databaseReference;
     public static String phone11, tempdate1, phone1;
     String st, date;
@@ -74,7 +74,7 @@ public class Login extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -88,7 +88,6 @@ public class Login extends AppCompatActivity {
         btngenOTP = findViewById(R.id.btngenerateOTP);
         mAuth = FirebaseAuth.getInstance();
         bar = findViewById(R.id.bar);
-
 
 
         btngenOTP.setOnClickListener(new View.OnClickListener() {
@@ -130,31 +129,25 @@ public class Login extends AppCompatActivity {
                     //Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
 
 
-                    if (st.equals("wait")) {
+                    date = dataSnapshot.getKey();
+                    phone11 = dataSnapshot.getValue().toString();
+                    phone11 = "" + phone11.substring(1, 14);
+                    String phone1 = "" + phone11;
+                    String tempdate = "" + date;
+                    Boolean temp = isDateAfter(tempdate);
 
-
-                        date = dataSnapshot.getKey();
-                        phone11 = dataSnapshot.getValue().toString();
-                        phone11 = "" + phone11.substring(1, 14);
-                        String phone1 = "" + phone11;
-                        //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
-                        String tempdate = "" + date;
-
-                        Boolean temp = isDateAfter(tempdate);
-                        if (temp == true) {
-
-
-
-                                    }
-
+                    if (temp == false) {
+                        if (st.equals("vaca")) {
+                            databaseReference.child("" + date).removeValue();
                         } else {
-                            databaseReference.child(tempdate1).removeValue();
+                            databaseReference.child("" + date).removeValue();
                             firestore.collection("Users")
                                     .document(phone1).collection("Orders")
-                                    .document(" " + tempdate1).delete();
+                                    .document(" " + date).delete();
                         }
                     }
                 }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -164,11 +157,6 @@ public class Login extends AppCompatActivity {
 
 
     }
-
-
-
-
-
 
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -232,7 +220,7 @@ public class Login extends AppCompatActivity {
 
                         Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT);
                         Intent intent = new Intent(Login.this, Signup.class);
-                        intent.putExtra("User",user.getPhoneNumber());
+                        intent.putExtra("User", user.getPhoneNumber());
                         startActivity(intent);
 
                     } else {
@@ -241,8 +229,8 @@ public class Login extends AppCompatActivity {
 
 
                         Intent intent = new Intent(Login.this, MainActivity2.class);
-                        intent.putExtra("User",user.getPhoneNumber());
-                        user1=user.getPhoneNumber();
+                        intent.putExtra("User", user.getPhoneNumber());
+                        user1 = user.getPhoneNumber();
 
                         startActivity(intent);
 
@@ -261,23 +249,20 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser =  FirebaseAuth.getInstance().getCurrentUser();
-        if(currentUser!=null)
-        {
-            if(currentUser.getPhoneNumber().equals("+97258741140"))
-            {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            if (currentUser.getPhoneNumber().equals("+97258741140")) {
                 Intent intent = new Intent(Login.this, MainActivity2.class);
                 startActivity(intent);
-            }
-            else{
-                Intent intent = new Intent(Login.this, MainActivity2.class);
+            } else {
+                Intent intent = new Intent(Login.this, MainActivity.class);
 
-                intent.putExtra("User",currentUser.getPhoneNumber());
-                user1=currentUser.getPhoneNumber();
+                intent.putExtra("User", currentUser.getPhoneNumber());
+                user1 = currentUser.getPhoneNumber();
                 startActivity(intent);
             }
 
-      }
+        }
     }
 
     public static boolean isDateAfter(String dateString) {

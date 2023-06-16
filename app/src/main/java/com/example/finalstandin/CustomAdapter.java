@@ -23,15 +23,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private SelectListener listener;
 
     CustomAdapter(Activity activity, Context context, ArrayList id, ArrayList book_time, ArrayList date,
-                  ArrayList the_reason, ArrayList address, SelectListener listener){
+                  ArrayList the_reason, ArrayList address, SelectListener listener) {
         this.activity = activity;
         this.context = context;
         this.id = id;
         this.book_time = book_time;
         this.date = date;
         this.the_reason = the_reason;
-        this.address= address;
-        this.listener= listener;
+        this.address = address;
+        this.listener = listener;
 
     }
 
@@ -57,8 +57,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             @Override
             public boolean onLongClick(View view) {
 
-            listener.onItemLongClick(String.valueOf(date.get( holder.getAdapterPosition())),String.valueOf(id.get( holder.getAdapterPosition())));
-            return true;
+                listener.onItemLongClick(String.valueOf(date.get(holder.getAdapterPosition())), String.valueOf(id.get(holder.getAdapterPosition())));
+                return true;
             }
         });
 
@@ -71,7 +71,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView id_txt, time_txt, date_txt, the_reason_txt,address_txt;
+        TextView id_txt, time_txt, date_txt, the_reason_txt, address_txt;
         LinearLayout mainLayout;
 
         MyViewHolder(@NonNull View itemView) {
@@ -80,7 +80,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             time_txt = itemView.findViewById(R.id.time_txt);
             date_txt = itemView.findViewById(R.id.date_txt);
             the_reason_txt = itemView.findViewById(R.id.the_reason_txt);
-            address_txt= itemView.findViewById(R.id.address_txt);
+            address_txt = itemView.findViewById(R.id.address_txt);
             mainLayout = itemView.findViewById(R.id.mainLayout1);
             //Animate Recyclerview
 //            Animation translate_anim = AnimationUtils.loadAnimation(context, R.anim.translate_anim);

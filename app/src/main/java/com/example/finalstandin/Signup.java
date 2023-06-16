@@ -37,14 +37,13 @@ import java.util.HashMap;
 public class Signup extends AppCompatActivity {
 
     EditText phone, otp, A, fullname;
-    Button btngenOTP, btnverify, signupbtn,selectImageBtn, uploadImageBtn;
+    Button btngenOTP, btnverify, signupbtn, selectImageBtn, uploadImageBtn;
     RadioGroup radiogender;
     RadioButton female, male;
     FirebaseAuth mAuth;
     String verificationID;
     ProgressBar bar;
     TextView birth, signup, text, gender;
-
 
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
@@ -54,14 +53,15 @@ public class Signup extends AppCompatActivity {
     Uri imageUri;
     StorageReference storageReference;
     ProgressDialog progressDialog;
-    public static String user2 ="";
+    public static String user2 = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        Intent takeit= getIntent();
-        String user=takeit.getStringExtra("User");
+        Intent takeit = getIntent();
+        String user = takeit.getStringExtra("User");
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -82,15 +82,14 @@ public class Signup extends AppCompatActivity {
         image = findViewById(R.id.firebaseImage);
 
 
-
         signupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String thegender ="";
-                if(male.isChecked())
-                    thegender="male";
+                String thegender = "";
+                if (male.isChecked())
+                    thegender = "male";
                 else
-                    thegender="female";
+                    thegender = "female";
                 String name = fullname.getText().toString();
                 String date = getTodayDate();
 
@@ -161,16 +160,12 @@ public class Signup extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100 && data != null && data.getData() != null)
-        {
+        if (requestCode == 100 && data != null && data.getData() != null) {
             imageUri = data.getData();
             image.setImageURI(imageUri);
 
         }
     }
-
-
-
 
 
     private String getTodayDate() {

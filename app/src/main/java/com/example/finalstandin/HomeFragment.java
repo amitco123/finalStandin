@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment implements SelectListener {
     FirebaseFirestore firestore;
     StorageReference storageReference;
     String address, address2 = "", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
-    public String date2="";
+    public String date2 = "";
 
     ImageView empty_imageview;
     TextView no_data;
@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment implements SelectListener {
     @Override
     public void onItemLongClick(String date, String id) {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-            date2=date;
+        date2 = date;
         builder.setTitle("Delete " + date + " ?");
         builder.setMessage("Are you sure you want to cancel the request of the stand in order" + date + " ?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment implements SelectListener {
 
     private void sendSMS() {
         String phone = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
-        String message =  "היי הזמנתך בתאריך" + " "+ date2+ " "+"בוטלה בהצלחה";
+        String message = "היי הזמנתך בתאריך" + " " + date2 + " " + "בוטלה בהצלחה";
 
         if (!phone.isEmpty() && !message.isEmpty()) // בודק האם השדות ריקים
         {

@@ -24,27 +24,28 @@ public class OrderFragment extends Fragment {
 
     View view;
 
-        private CalendarView calendarView;
-        private TextView textView;
+    private CalendarView calendarView;
+    private TextView textView;
 
-        private String stringDateSelected;
-            private DatabaseReference databaseReference;
-        Button button;
-        String user1;
+    private String stringDateSelected;
+    private DatabaseReference databaseReference;
+    Button button;
+    String user1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_order, container, false);
 
-        user1=((MainActivity) getContext()).user;
-        button=view.findViewById(R.id.button1);
-        calendarView =view.findViewById(R.id.calendarView);
-        textView =view.findViewById(R.id.textView);
-        calendarView.setMinDate(System.currentTimeMillis() - 1000);
+        user1 = ((MainActivity) getContext()).user;
+        button = view.findViewById(R.id.button1);
+        calendarView = view.findViewById(R.id.calendarView);
+        textView = view.findViewById(R.id.textView);
+        //calendarView.setMinDate(System.currentTimeMillis() - 1000);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int day, int month, int year) {
-                stringDateSelected = Integer.toString(year) +","+ ""+ Integer.toString(month+1) +","+ ""+Integer.toString(day);
+                stringDateSelected = Integer.toString(year) + "," + "" + Integer.toString(month + 1) + "," + "" + Integer.toString(day);
                 calendarClicked();
             }
         });
@@ -55,40 +56,39 @@ public class OrderFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getActivity(), Orderselection.class);
-                String date=textView.getText().toString();
-                intent.putExtra("date",date);
+                String date = textView.getText().toString();
+                intent.putExtra("date", date);
                 startActivity(intent);
             }
         });
-        return  view;
+        return view;
     }
 
-        private void calendarClicked(){
-            databaseReference.child(stringDateSelected).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getValue() != null){
-                        textView.setText("taken");
+    private void calendarClicked() {
+        databaseReference.child(stringDateSelected).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() != null) {
+                    textView.setText("taken");
 
 
-                            button.setVisibility(View.INVISIBLE);
+                    button.setVisibility(View.INVISIBLE);
 
 
-                    }else {
+                } else {
 
-                        textView.setText(stringDateSelected);
-                        button.setVisibility(View.VISIBLE);
-                    }
-
+                    textView.setText(stringDateSelected);
+                    button.setVisibility(View.VISIBLE);
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
+            }
 
-        }
-
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
     }
+
+
+}

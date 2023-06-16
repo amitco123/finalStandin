@@ -17,12 +17,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity2 extends AppCompatActivity implements ShakeDetector.OnShakeListener {
 
-    ApprovedAdminFragment approvedAdminFragment= new ApprovedAdminFragment();
-    RequestAdminFragment requestAdminFragment =new RequestAdminFragment();
-    SetDayOffAdminFragment setDayOffAdminFragment =new SetDayOffAdminFragment();
+    ApprovedAdminFragment approvedAdminFragment = new ApprovedAdminFragment();
+    RequestAdminFragment requestAdminFragment = new RequestAdminFragment();
+    SetDayOffAdminFragment setDayOffAdminFragment = new SetDayOffAdminFragment();
     BottomNavigationView BottomNavigationView;
-    public  static String user1;
+    public static String user1;
     ShakeDetector shakeDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,7 @@ public class MainActivity2 extends AppCompatActivity implements ShakeDetector.On
             }
         });
     }
+
     @Override
     public void onShakeDetected() {
         Toast.makeText(this, "shake", Toast.LENGTH_SHORT).show();

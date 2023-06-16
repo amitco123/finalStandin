@@ -1,4 +1,5 @@
 package com.example.finalstandin;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -52,7 +53,8 @@ public class ShakeDetector implements SensorEventListener {
     /**
      * Called when the accuracy of a sensor changes.
      * Not used in this implementation.
-     * @param sensor The Sensor object whose accuracy changed.
+     *
+     * @param sensor   The Sensor object whose accuracy changed.
      * @param accuracy The new accuracy value.
      */
     @Override
@@ -68,5 +70,5 @@ public class ShakeDetector implements SensorEventListener {
          * Called when a shake gesture is detected.
          */
         void onShakeDetected();
-}
+    }
 }

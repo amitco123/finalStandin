@@ -5,12 +5,11 @@ package com.example.finalstandin;
  * המחלקה מגדירה חוליה גנרית שבה ערך מטיפוס T והפניה לחוליה העוקבת.
  * </h4>
  *
+ * @param <T> טיפוס הערך בחוליה
  * @author Evgeny KANEL+ צוות מדעי המחשב, המרכז להוראת המדעים, האוניברסיטה העברית, ירושלים
  * @version 26.11.2007-25.12.2013
- * @param <T> טיפוס הערך בחוליה
  */
-public class Node<T>
-{
+public class Node<T> {
     private T info;
     private Node<T> next;
 
@@ -21,10 +20,8 @@ public class Node<T>
      * </b>
      *
      * @param x ערך החוליה
-     *
      */
-    public Node(T x)
-    {
+    public Node(T x) {
         this.info = x;
         this.next = null;
     }
@@ -36,16 +33,16 @@ public class Node<T>
      * ערכו של next יכול להיות null
      * </b>
      *
-     * @param x ערך החוליה
+     * @param x    ערך החוליה
      * @param next הפניה לחוליה העוקבת
      */
-    public Node(T x, Node<T> next)
-    {
+    public Node(T x, Node<T> next) {
         this.info = x;
         this.next = next;
     }
 
-    /** KANEL
+    /**
+     * KANEL
      * <dt dir="rtl" >
      * <b>
      * הפעולה מחזירה את הערך של החוליה
@@ -53,9 +50,8 @@ public class Node<T>
      *
      * @return ערך החוליה
      */
-    public T getValue()
-    {
-        return(this.info);
+    public T getValue() {
+        return (this.info);
     }
 
     /**
@@ -66,10 +62,10 @@ public class Node<T>
      *
      * @return ערך החוליה
      */
-    public T getInfo()
-    {
-        return(this.info);
+    public T getInfo() {
+        return (this.info);
     }
+
     /**
      * <dt dir="rtl" >
      * <b>
@@ -78,12 +74,12 @@ public class Node<T>
      *
      * @param x ערך החוליה החדש
      */
-    public void setInfo(T x)
-    {
+    public void setInfo(T x) {
         this.info = x;
     }
 
-    /** KANEL
+    /**
+     * KANEL
      * <dt dir="rtl" >
      * <b>
      * הפעולה משנה את הערך השמור בחוליה ל-x
@@ -91,8 +87,7 @@ public class Node<T>
      *
      * @param x ערך החוליה החדש
      */
-    public void setValue(T x)
-    {
+    public void setValue(T x) {
         this.info = x;
     }
 
@@ -104,9 +99,8 @@ public class Node<T>
      *
      * @return הפניה לחוליה העוקבת
      */
-    public Node<T> getNext()
-    {
-        return(this.next);
+    public Node<T> getNext() {
+        return (this.next);
     }
 
     /**
@@ -118,24 +112,22 @@ public class Node<T>
      *
      * @param next הפניה לחוליה העוקבת
      */
-    public void setNext(Node<T> next)
-    {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 
-    /** KANEL
+    /**
+     * KANEL
      * <dt dir="rtl" >
      * <b>
-
+     * <p>
      * הפעולה בודקת האם קיימת חוליה הבאה
      * </b>
      *
-     *
      * @return boolean
      */
-    public boolean hasNext()
-    {
-        return this.next!=null;
+    public boolean hasNext() {
+        return this.next != null;
     }
 
 
@@ -147,8 +139,7 @@ public class Node<T>
      *
      * @return מחרוזת המתארת את החוליה
      */
-    public String toString()
-    {
-        return("" + this.info);
+    public String toString() {
+        return ("" + this.info);
     }
 }

@@ -57,7 +57,7 @@ public class SetDayOffAdminFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String date=textView.getText().toString();
-                databaseReference.child(date).child(user1).setValue("Dayoff");
+                databaseReference.child(date).child(user1).setValue("vaca");
                 Intent intent = new Intent(getActivity(), MainActivity2.class);
 
                 startActivity(intent);

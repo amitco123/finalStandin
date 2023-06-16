@@ -44,7 +44,7 @@
       app:layout_constraintTop_toTopOf="@+id/name1" />
 
   <TextView
-      android:id="@+id/address2"
+      android:id="@+id/Address2"
       android:layout_width="226dp"
       android:layout_height="31dp"
       android:layout_marginTop="12dp"
@@ -93,7 +93,7 @@
       android:textAlignment="center"
       android:textSize="20sp"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/address2" />
+      app:layout_constraintTop_toBottomOf="@+id/Address2" />
 
   <TextView
       android:id="@+id/FoS"
@@ -106,7 +106,7 @@
       android:textSize="20sp"
       app:layout_constraintBottom_toBottomOf="@+id/OoT"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/address2"
+      app:layout_constraintTop_toBottomOf="@+id/Address2"
       app:layout_constraintVertical_bias="0.0" />
 
   <TextView
@@ -187,8 +187,8 @@
 
   <TextView
       android:id="@+id/money"
-      android:layout_width="73dp"
-      android:layout_height="31dp"
+      android:layout_width="62dp"
+      android:layout_height="23dp"
       android:text="money"
       android:textAlignment="center"
       android:textSize="20sp"

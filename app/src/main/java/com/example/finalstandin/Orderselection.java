@@ -71,7 +71,7 @@ public class Orderselection extends AppCompatActivity {
     AutoCompleteTextView autoCompleteTextView;
     FirebaseAuth mAuth;
     boolean flag;
-    String sendaddress, Time, RdbToL, RdbFoS, RdbOoT, sendloc1, sendloc = "", senddate, st9, sendhowmuchtime, user1, name = " aba", birth, gender ,st;
+    String sendaddress, Time, RdbToL, RdbFoS, RdbOoT, sendloc1, sendloc = "", senddate, st9, sendhowmuchtime, user1, name = " aba", birth, gender, st, price;
     private DatabaseReference databaseReference;
     FirebaseFirestore firestore;
 
@@ -84,7 +84,7 @@ public class Orderselection extends AppCompatActivity {
         date = findViewById(R.id.textView1);
         Intent takeit = getIntent();
         String st = takeit.getStringExtra("date");
-        user1= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+        user1 = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
         Toast.makeText(Orderselection.this, user1, Toast.LENGTH_SHORT).show();
         date.setText(st);
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
@@ -263,17 +263,15 @@ public class Orderselection extends AppCompatActivity {
     }
 
     private void getLastLocation() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED)
-        {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
-                    if(location!=null)
-                    {
-                        Geocoder geocoder= new Geocoder(Orderselection.this,Locale.getDefault());
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(Orderselection.this, Locale.getDefault());
                         try {
-                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1 );
-                            address.setText(" "+ addresses.get(0).getAddressLine(0));
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            address.setText(" " + addresses.get(0).getAddressLine(0));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -283,25 +281,22 @@ public class Orderselection extends AppCompatActivity {
                 }
             });
 
-        }
-        else {
+        } else {
             askPermission();
         }
     }
 
     private void askPermission() {
-        ActivityCompat.requestPermissions(Orderselection.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
+        ActivityCompat.requestPermissions(Orderselection.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if( requestCode==REQUEST_CODE){
-            if( grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLastLocation();
-            }
-            else
-            {
+            } else {
                 Toast.makeText(this, "Request Permission", Toast.LENGTH_SHORT).show();
             }
         }
@@ -332,6 +327,22 @@ public class Orderselection extends AppCompatActivity {
                 hashMap1.put("how much time", sendhowmuchtime);
                 hashMap1.put("address of the place of the Trap", "");
                 hashMap1.put("address of the place of the meeting", sendloc1);
+                if (sendhowmuchtime.equals("Seven"))
+                    price = "400";
+                else if (sendhowmuchtime.equals("Six")) {
+                    price = "350";
+                } else if (sendhowmuchtime.equals("Five"))
+                    price = "315";
+                else if (sendhowmuchtime.equals("Four"))
+                    price = "275";
+                else if (sendhowmuchtime.equals("There"))
+                    price = "225";
+                else if (sendhowmuchtime.equals("Two"))
+                    price = "175";
+                else
+                    price = "100";
+
+                hashMap1.put("price", price);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference documentRef = db.collection("Users")
                         .document(user1);
@@ -378,11 +389,7 @@ public class Orderselection extends AppCompatActivity {
 
                 startActivity(new Intent(Orderselection.this, MainActivity.class));
             }
-        }
-
-
-
-        else {
+        } else {
             if (Time.equals("select time of meeting") || sendloc1.equals("") || senddate.equals("") || st9.equals("") || sendloc.equals("")) {
                 Toast.makeText(this, "something is missing", Toast.LENGTH_SHORT).show();
             } else {
@@ -398,6 +405,22 @@ public class Orderselection extends AppCompatActivity {
                 hashMap1.put("how much time", sendhowmuchtime);
                 hashMap1.put("address of the place of the Trap", sendloc);
                 hashMap1.put("address of the place of the meeting", sendloc1);
+                if (sendhowmuchtime.equals("seven"))
+                    price = "400";
+                else if (sendhowmuchtime.equals("six")) {
+                    price = "350";
+                } else if (sendhowmuchtime.equals("five"))
+                    price = "315";
+                else if (sendhowmuchtime.equals("four"))
+                    price = "275";
+                else if (sendhowmuchtime.equals("there"))
+                    price = "225";
+                else if (sendhowmuchtime.equals("two"))
+                    price = "175";
+                else
+                    price = "100";
+
+                hashMap1.put("price", price);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference documentRef = db.collection("Users")
                         .document(user1);

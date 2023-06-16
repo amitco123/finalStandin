@@ -15,13 +15,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity implements ShakeDetector.OnShakeListener{
+public class MainActivity extends AppCompatActivity implements ShakeDetector.OnShakeListener {
     BottomNavigationView BottomNavigationView;
-    HomeFragment homeFragment= new HomeFragment();
-    OrderFragment orderFragment =new OrderFragment();
-    ReviewFragment reviewFragment =new ReviewFragment();
+    HomeFragment homeFragment = new HomeFragment();
+    OrderFragment orderFragment = new OrderFragment();
+    ReviewFragment reviewFragment = new ReviewFragment();
     ShakeDetector shakeDetector;
     String user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ShakeDetector.OnS
 
         user = Login.user1;
         if (user.equals(""))
-            user=Signup.user2;
+            user = Signup.user2;
         BottomNavigationView = findViewById(R.id.bottom_navigation);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.cont, homeFragment).commit();

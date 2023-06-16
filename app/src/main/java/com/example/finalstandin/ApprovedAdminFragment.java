@@ -105,85 +105,70 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                         String tempdate = "" + date;
 
 
-                            DocumentReference documentRef = db.collection("Users")
-                                    .document("" + phone1).collection("Orders")
-                                    .document(" " + date);
-                            documentRef.get()
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            if (documentSnapshot.exists()) {
-                                                thereason = documentSnapshot.getString("st9");
-                                                fos = documentSnapshot.getString("RdbFoS");
-                                                oot = documentSnapshot.getString("RdbOoT");
-                                                tol = documentSnapshot.getString("RdbToL");
-                                                address = documentSnapshot.getString("address of the place of the meeting");
-                                                address2 = documentSnapshot.getString("address of the place of the Trap");
-                                                time = documentSnapshot.getString("Time of meeting");
-                                                how_much_time = documentSnapshot.getString("how much time");
-                                                name = documentSnapshot.getString("name");
-                                                name2 = "" + name;
-                                                gender = documentSnapshot.getString("gender");
-                                                birth = documentSnapshot.getString("birth");
-                                                if (how_much_time.equals("seven"))
-                                                    price = "400";
-                                                else if (how_much_time.equals("six")) {
-                                                    price = "350";
-                                                } else if (how_much_time.equals("five"))
-                                                    price = "315";
-                                                else if (how_much_time.equals("four"))
-                                                    price = "275";
-                                                else if (how_much_time.equals("there"))
-                                                    price = "225";
-                                                else if (how_much_time.equals("two"))
-                                                    price = "175";
-                                                else
-                                                    price = "100";
+                        DocumentReference documentRef = db.collection("Users")
+                                .document("" + phone1).collection("Orders")
+                                .document(" " + date);
+                        documentRef.get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if (documentSnapshot.exists()) {
+                                            thereason = documentSnapshot.getString("st9");
+                                            fos = documentSnapshot.getString("RdbFoS");
+                                            oot = documentSnapshot.getString("RdbOoT");
+                                            tol = documentSnapshot.getString("RdbToL");
+                                            address = documentSnapshot.getString("address of the place of the meeting");
+                                            address2 = documentSnapshot.getString("address of the place of the Trap");
+                                            time = documentSnapshot.getString("Time of meeting");
+                                            how_much_time = documentSnapshot.getString("how much time");
+                                            name = documentSnapshot.getString("name");
+                                            name2 = "" + name;
+                                            gender = documentSnapshot.getString("gender");
+                                            birth = documentSnapshot.getString("birth");
+                                            price = documentSnapshot.getString("price");
+                                            // Process the retrieved data
+                                            try {
+                                                //Toast.makeText(getActivity(), " "+phone1, Toast.LENGTH_SHORT).show();
+                                                storageReference = FirebaseStorage.getInstance().getReference("image/" + phone1);
+                                                File localFile = File.createTempFile(phone1, "jpeg");
 
 
-                                                // Process the retrieved data
-                                                try {
-                                                    //Toast.makeText(getActivity(), " "+phone1, Toast.LENGTH_SHORT).show();
-                                                    storageReference = FirebaseStorage.getInstance().getReference("image/" + phone1);
-                                                    File localFile = File.createTempFile(phone1, "jpeg");
+                                                storageReference.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                                        if (task.isSuccessful()) {
 
-
-                                                    storageReference.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
-                                                            if (task.isSuccessful()) {
-
-                                                                Bitmap bitmap2 = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                                                if (nod2 == null) {
-                                                                    nod2 = new Node<>(new picUser("" + phone1, bitmap2));
-                                                                } else {
-                                                                    Node<picUser> temp = getLastNode(nod2);
-                                                                    temp.setNext(new Node<>(new picUser("" + phone1, bitmap2)));
-                                                                }
-
+                                                            Bitmap bitmap2 = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                            if (nod2 == null) {
+                                                                nod2 = new Node<>(new picUser("" + phone1, bitmap2));
+                                                            } else {
+                                                                Node<picUser> temp = getLastNode(nod2);
+                                                                temp.setNext(new Node<>(new picUser("" + phone1, bitmap2)));
                                                             }
-                                                        }
 
-                                                    });
-                                                } catch (IOException e) {
-                                                    throw new RuntimeException(e);
-                                                }
-                                                Order order = new Order(address, address2, name2, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth, price, null);
-                                                orderuser.add(order);
+                                                        }
+                                                    }
+
+                                                });
+                                            } catch (IOException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                            Order order = new Order(address, address2, name2, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth, price, null);
+                                            orderuser.add(order);
 //                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
 //                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
 
 
-                                                //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
-                                                // Log the address
-                                                Log.d("FirestoreData", "Address: " + address);
-                                            } else {
-                                                //Toast.makeText(getContext(), "dos", Toast.LENGTH_SHORT).show();
-                                                Log.d("FirestoreData", "Document does not exist");
-                                            }
+                                            //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
+                                            // Log the address
+                                            Log.d("FirestoreData", "Address: " + address);
+                                        } else {
+                                            //Toast.makeText(getContext(), "dos", Toast.LENGTH_SHORT).show();
+                                            Log.d("FirestoreData", "Document does not exist");
                                         }
-                                    });
-                        }
+                                    }
+                                });
+                    }
 
 
                 }
@@ -209,7 +194,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                 recyclerView1.setAdapter(customAdapterAdmin);
             }
         };
-        mHandler2.postDelayed(mRunnable2, 3 * 1000);//Execute after 10 Seconds
+        mHandler2.postDelayed(mRunnable2, 5 * 1000);//Execute after 10 Seconds
 
 
         return view;
@@ -222,7 +207,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
 
     @Override
     public void onClick(String date, String time, String address, String address2, String name, String money, String tol, String oot, String fos, String thereason, String phone, String gender, String how_much_time, String birth, Bitmap image) {
-        TextView date2, name1, age1, phone1, address1, time2, money1, therreason, gender1, OoT, FoS, ToL, how_much_time1;
+        TextView date2, name1, age1, phone1, address1, address3, time2, money1, therreason, gender1, OoT, FoS, ToL, how_much_time1;
         ImageView imageView1;
         Button cancel, go;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
@@ -238,6 +223,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
         age1 = tempAd.findViewById(R.id.age1);
         phone1 = tempAd.findViewById(R.id.phone11);
         address1 = tempAd.findViewById(R.id.Address11);
+        address3 = tempAd.findViewById(R.id.Address22);
         time2 = tempAd.findViewById(R.id.time1);
         money1 = tempAd.findViewById(R.id.money1);
         therreason = tempAd.findViewById(R.id.thereason1);
@@ -256,6 +242,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
         age1.setText(birth);
         phone1.setText(phone);
         address1.setText(address);
+        address3.setText(address2);
         time2.setText(time);
         money1.setText(money);
         therreason.setText(thereason);
@@ -363,6 +350,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
             n = n.getNext();
         return n;
     }
+
     public static boolean isDateAfter(String dateString) {
 
         try {
