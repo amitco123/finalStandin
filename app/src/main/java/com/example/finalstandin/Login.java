@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,10 +37,26 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class Login extends AppCompatActivity {
@@ -49,10 +67,20 @@ public class Login extends AppCompatActivity {
     String verificationID;
     ProgressBar bar;
     public static String user1 ="";
+    private DatabaseReference databaseReference;
+    public static String phone11, tempdate1, phone1;
+    String st, date;
+    FirebaseFirestore firestore;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        firestore = FirebaseFirestore.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
         phone = findViewById(R.id.phone1);
         otp = findViewById(R.id.otp);
@@ -88,6 +116,49 @@ public class Login extends AppCompatActivity {
                 else {
                     verifycode(otp.getText().toString());
                 }
+            }
+        });
+
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    st = dataSnapshot.getValue().toString();
+                    st = st.substring(15, 19);
+                    //Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
+
+
+                    if (st.equals("wait")) {
+
+
+                        date = dataSnapshot.getKey();
+                        phone11 = dataSnapshot.getValue().toString();
+                        phone11 = "" + phone11.substring(1, 14);
+                        String phone1 = "" + phone11;
+                        //Toast.makeText(getContext(), phone , Toast.LENGTH_SHORT).show();
+                        String tempdate = "" + date;
+
+                        Boolean temp = isDateAfter(tempdate);
+                        if (temp == true) {
+
+
+
+                                    }
+
+                        } else {
+                            databaseReference.child(tempdate1).removeValue();
+                            firestore.collection("Users")
+                                    .document(phone1).collection("Orders")
+                                    .document(" " + tempdate1).delete();
+                        }
+                    }
+                }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -169,7 +240,7 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(Login.this, "already", Toast.LENGTH_SHORT).show();
 
 
-                        Intent intent = new Intent(Login.this, MainActivity.class);
+                        Intent intent = new Intent(Login.this, MainActivity2.class);
                         intent.putExtra("User",user.getPhoneNumber());
                         user1=user.getPhoneNumber();
 
@@ -209,6 +280,31 @@ public class Login extends AppCompatActivity {
       }
     }
 
+    public static boolean isDateAfter(String dateString) {
 
+        try {
+            // Get today's date
+            Calendar today = Calendar.getInstance();
+
+            // Parse the given date string
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd,MM,yyyy", Locale.getDefault());
+            Date date = dateFormat.parse(dateString);
+
+            // Set the parsed date to 00:00:00 time
+            Calendar givenDate = Calendar.getInstance();
+            givenDate.setTime(date);
+            givenDate.set(Calendar.HOUR_OF_DAY, 0);
+            givenDate.set(Calendar.MINUTE, 0);
+            givenDate.set(Calendar.SECOND, 0);
+            givenDate.set(Calendar.MILLISECOND, 0);
+
+            // Compare the given date with today's date
+            return givenDate.after(today);
+        } catch (ParseException e) {
+            // Handle parsing errors
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

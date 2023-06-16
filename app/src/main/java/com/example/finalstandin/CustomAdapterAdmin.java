@@ -48,15 +48,11 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
 
         holder.address.setText((orders.get(position).getAddress()));
 
-        //  holder.imageView.setImageBitmap(orders.get(position).getBitmap());
         Bitmap bitmap= RequestAdminFragment.getBitmapFromName(""+orders.get(position).getPhone());
         if (bitmap!=null)
         {
             holder.imageView.setImageBitmap(bitmap);
         }
-//        else {
-//            Toast.makeText(context, "EE", Toast.LENGTH_SHORT).show();
-//        }
 
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {

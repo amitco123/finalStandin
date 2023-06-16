@@ -66,42 +66,8 @@ public class CustomAdapterAdmin2 extends RecyclerView.Adapter<CustomAdapterAdmin
 
             });
         }
-
-//                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//
-//
-//                            String Date,Time,Address,Name,Price,Tol,Oot,Fos,Adress2,Thereason,Phone,Gender,How_much_time,Birth;
-//                            Bitmap bitmap;
-//                            Date =  orders.get(holder.getAdapterPosition()).getDate();
-//                            Time =  orders.get(holder.getAdapterPosition()).getTime();
-//                            Address = orders.get(holder.getAdapterPosition()).getAddress();
-//                            Name = orders.get(holder.getAdapterPosition()).getName();
-//                            Price =orders.get(holder.getAdapterPosition()).getPrice();
-//                            Tol =orders.get(holder.getAdapterPosition()).getTol();
-//                            Oot =orders.get(holder.getAdapterPosition()).getOot();
-//                            Fos =orders.get(holder.getAdapterPosition()).getFos();
-//                            Adress2 =orders.get(holder.getAdapterPosition()).getAdress2();
-//                            Thereason =orders.get(holder.getAdapterPosition()).getThereason();
-//                            Phone =orders.get(holder.getAdapterPosition()).getPhone();
-//                            Gender =orders.get(holder.getAdapterPosition()).getGender();
-//                            How_much_time = orders.get(holder.getAdapterPosition()).getHow_much_time();
-//                            Birth=orders.get(holder.getAdapterPosition()).getBirth();
-//                            bitmap= orders.get(holder.getAdapterPosition()).getBitmap();
-//                            listener.onClick(Date,Time,Address,Adress2,Name,Price,Tol,Oot,Fos,Thereason,Phone,Gender,How_much_time,Birth,bitmap);
-                    //Toast.makeText(context, ", "+Date , Toast.LENGTH_LONG).show();
-
-
-//                        }
-//                    });
-//                }
-//            });
-
-
                 @Override
                 public int getItemCount() {
-                    //Toast.makeText(context,"" + orders.size(), Toast.LENGTH_SHORT).show();
                     return orders.size();
                 }
 
