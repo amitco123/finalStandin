@@ -69,7 +69,8 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
     public static Node<picUser> node;
     public String date22, time22, address11, address22, name2, money2, tol2, oot2, fos2, thereason2, phone2, gender2, how_much_time2, birth2, tempdate, tempTime, tempaddress, tempthereason, tempdate1;
     public static String currentDate;
-    public  CustomAdapterAdmin customAdapterAdmin;
+    public static CustomAdapterAdmin customAdapterAdmin;
+    public static  RecyclerView recyclerView1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
         orderuser.clear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView1);
+        recyclerView1 = view.findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
         currentDate = new SimpleDateFormat("dd,MM,yyyy", Locale.getDefault()).format(new Date());
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -196,7 +197,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
             public void run() {
 
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                 customAdapterAdmin = new CustomAdapterAdmin(getContext(), orderuser, RequestAdminFragment.this, getActivity());
+                customAdapterAdmin = new CustomAdapterAdmin(getContext(), orderuser, RequestAdminFragment.this, getActivity());
                 recyclerView1.setAdapter(customAdapterAdmin);
                 if(orderuser.size()==0)
                 {
@@ -222,7 +223,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
         ImageView imageView1;
         Button yes, no, go;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
-        Order order = new Order(""+address, ""+address2, ""+name, ""+date, ""+tol,""+ oot, ""+fos, ""+thereason,""+ phone,""+ gender, ""+time,""+ how_much_time,""+ birth,""+ price, image);
+        Order order1 = new Order(""+address, ""+address2, ""+name, ""+date, ""+tol,""+ oot, ""+fos, ""+thereason,""+ phone,""+ gender, ""+time,""+ how_much_time,""+ birth,""+ price, image);
 
 
         AlertDialog.Builder tempBuilder = new AlertDialog.Builder(getContext());
@@ -346,10 +347,31 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
                                        startActivity(i);
 
 
-                                       orderuser.remove(order);
+                                       orderuser.remove(order1);
+                                       //orderuser.clear();
 
-                                       customAdapterAdmin.notifyDataSetChanged();
+                                       Toast.makeText(getContext(), "a", Toast.LENGTH_SHORT).show();
+
+//                                       Runnable mRunnable2;
+//                                       Handler mHandler2 = new Handler();
+////        orderuser.remove(a);
+//                                       mRunnable2 = new Runnable() {
+//                                           @Override
+//                                           public void run() {
+//
+//                                               // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
+//                                               customAdapterAdmin = new CustomAdapterAdmin(getContext(), orderuser, RequestAdminFragment.this, getActivity());
+//                                               recyclerView1.setAdapter(customAdapterAdmin);
+//                                               if(orderuser.size()==0)
+//                                               {
+//                                                   imageView.setVisibility(View.VISIBLE);
+//                                                   imageView1.setVisibility(View.VISIBLE);
+//                                               }
+//                                           }
+//                                       };
+//                                       mHandler2.postDelayed(mRunnable2, 5 * 1000);//Execute after 10 Seconds
                                        tempAd.dismiss();
+                                       //tempAd.dismiss();
 //                                       Fragment frg = new RequestAdminFragment();
 //                                       //frg = getFragmentManager().findFragmentByTag(""+new RequestAdminFragment().getTag());
 //                                       final FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -376,9 +398,10 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
                         .document(" " + date).delete();
                 tempAd.dismiss();
 
-                orderuser.remove(order);
+                orderuser.remove(order1);
 
                 customAdapterAdmin.notifyDataSetChanged();
+
 //                Fragment frg = null;
 //                frg = getFragmentManager().findFragmentByTag(""+new RequestAdminFragment().getTag());
 //                final FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -390,6 +413,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
 
         });
 
+        customAdapterAdmin.notifyDataSetChanged();
 
     }
 

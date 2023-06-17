@@ -225,7 +225,7 @@ public class Login extends AppCompatActivity {
 
                     } else {
                         //user is exists, just do login
-                        if (user.getPhoneNumber().equals("+972587411408")) {
+                        if (user.getPhoneNumber().equals("+972522094340")) {
                             Intent intent1 = new Intent(Login.this, MainActivity2.class);
                             startActivity(intent1);
                         }
@@ -258,7 +258,7 @@ public class Login extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            if (currentUser.getPhoneNumber().equals("+972587411408")) {
+            if (currentUser.getPhoneNumber().equals("+972522094340")) {
                 Intent intent = new Intent(Login.this, MainActivity2.class);
                 startActivity(intent);
             } else {

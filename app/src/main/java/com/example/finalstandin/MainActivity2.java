@@ -36,7 +36,7 @@ public class MainActivity2 extends AppCompatActivity implements ShakeDetector.On
 
         user1 = "+972532748823";
         BottomNavigationView = findViewById(R.id.bottom_navigation1);
-        getSupportFragmentManager().beginTransaction().replace(R.id.cont1, requestAdminFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.cont1, setDayOffAdminFragment).commit();
         BottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
