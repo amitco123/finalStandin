@@ -50,6 +50,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -58,7 +59,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
 
     View view;
     private DatabaseReference databaseReference;
-    private ArrayList<Order> orderuser;
+    public static ArrayList<Order> orderuser;
     FirebaseFirestore firestore;
     StorageReference storageReference;
     String address, address2 = "", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
@@ -75,8 +76,8 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
         view = inflater.inflate(R.layout.fragment_approved_admin, container, false);
 
 
-        imageView=view.findViewById(R.id.imageView10);
-        imageView1=view.findViewById(R.id.imageView11);
+        imageView = view.findViewById(R.id.imageView10);
+        imageView1 = view.findViewById(R.id.imageView11);
 
         firestore = FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
@@ -186,19 +187,17 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
 
             }
         });
-
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
 //        orderuser.remove(a);
         mRunnable2 = new Runnable() {
             @Override
             public void run() {
-
+                orderuser = sortOrdersByDate(orderuser);
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
                 CustomAdapterAdminForApproved customAdapterAdmin = new CustomAdapterAdminForApproved(getContext(), orderuser, ApprovedAdminFragment.this, getActivity());
                 recyclerView1.setAdapter(customAdapterAdmin);
-                if(orderuser.size()==0)
-                {
+                if (orderuser.size() == 0) {
                     imageView.setVisibility(View.VISIBLE);
                     imageView1.setVisibility(View.VISIBLE);
                 }
@@ -387,5 +386,23 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static ArrayList<Order> sortOrdersByDate(ArrayList<Order> orders) {
+        orders.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd,MM,yyyy");
+                try {
+                    Date date1 = dateFormat.parse(o1.getDate());
+                    Date date2 = dateFormat.parse(o2.getDate());
+                    return date1.compareTo(date2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+        return orders;
     }
 }

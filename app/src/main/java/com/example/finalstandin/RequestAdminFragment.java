@@ -51,6 +51,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -59,7 +60,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
 
     View view;
     private DatabaseReference databaseReference;
-    private ArrayList<Order> orderuser;
+    public static ArrayList<Order> orderuser;
     FirebaseFirestore firestore;
     StorageReference storageReference;
     String address, address2 = "", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
@@ -195,6 +196,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
         mRunnable2 = new Runnable() {
             @Override
             public void run() {
+                orderuser = sortOrdersByDate(orderuser);
 
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
                 customAdapterAdmin = new CustomAdapterAdmin(getContext(), orderuser, RequestAdminFragment.this, getActivity());
@@ -545,7 +547,23 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
         }
     }
 
-
+    public static ArrayList<Order> sortOrdersByDate(ArrayList<Order> orders) {
+        orders.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd,MM,yyyy");
+                try {
+                    Date date1 = dateFormat.parse(o1.getDate());
+                    Date date2 = dateFormat.parse(o2.getDate());
+                    return date1.compareTo(date2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+        return orders;
+    }
 }
 
 

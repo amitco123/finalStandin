@@ -1,5 +1,7 @@
 package com.example.finalstandin;
 
+import static com.example.finalstandin.ReviewFragment.sortOrdersByDate;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -37,14 +39,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 
 
 public class HomeFragment extends Fragment implements SelectListener {
     View view;
 
     private DatabaseReference databaseReference;
-    private ArrayList<Order> orderuser;
+    public static ArrayList<Order> orderuser;
     FirebaseFirestore firestore;
     StorageReference storageReference;
     String address, address2 = "", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
@@ -135,7 +141,7 @@ public class HomeFragment extends Fragment implements SelectListener {
         mRunnable2 = new Runnable() {
             @Override
             public void run() {
-
+                orderuser = sortOrdersByDate(orderuser);
                 CustomAdapterAdmin2 customAdapterAdmin = new CustomAdapterAdmin2(getContext(), orderuser, HomeFragment.this, getActivity());
                 recyclerView12.setAdapter(customAdapterAdmin);
                 if(orderuser.size()==0)
@@ -210,5 +216,23 @@ public class HomeFragment extends Fragment implements SelectListener {
             sendSMS();
         else
             Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show(); // מודיע שלא ניתן אישור
+    }
+
+    public static ArrayList<Order> sortOrdersByDate(ArrayList<Order> orders) {
+        orders.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd,MM,yyyy");
+                try {
+                    Date date1 = dateFormat.parse(o1.getDate());
+                    Date date2 = dateFormat.parse(o2.getDate());
+                    return date1.compareTo(date2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+        return orders;
     }
 }
