@@ -68,6 +68,7 @@ public class CustomAdapterAdmin2 extends RecyclerView.Adapter<CustomAdapterAdmin
 
     @Override
     public int getItemCount() {
+
         return orders.size();
     }
 

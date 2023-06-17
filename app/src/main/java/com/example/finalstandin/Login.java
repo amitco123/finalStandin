@@ -225,14 +225,21 @@ public class Login extends AppCompatActivity {
 
                     } else {
                         //user is exists, just do login
-                        Toast.makeText(Login.this, "already", Toast.LENGTH_SHORT).show();
+                        if (user.getPhoneNumber().equals("+972587411408")) {
+                            Intent intent1 = new Intent(Login.this, MainActivity2.class);
+                            startActivity(intent1);
+                        }
+                        else {
+                            Toast.makeText(Login.this, ""+user.getPhoneNumber(), Toast.LENGTH_SHORT).show();
 
 
-                        Intent intent = new Intent(Login.this, MainActivity2.class);
-                        intent.putExtra("User", user.getPhoneNumber());
-                        user1 = user.getPhoneNumber();
+                            Intent intent = new Intent(Login.this, MainActivity.class);
+                            intent.putExtra("User", user.getPhoneNumber());
+                            user1 = user.getPhoneNumber();
 
-                        startActivity(intent);
+                            startActivity(intent);
+                        }
+
 
                     }
                 } else {
@@ -251,7 +258,7 @@ public class Login extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            if (currentUser.getPhoneNumber().equals("+97258741140")) {
+            if (currentUser.getPhoneNumber().equals("+972587411408")) {
                 Intent intent = new Intent(Login.this, MainActivity2.class);
                 startActivity(intent);
             } else {

@@ -68,6 +68,7 @@ public class ReviewFragment extends Fragment implements SelectListener {
     StorageReference storageReference;
     String address, address2 = "", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
     RecyclerView recyclerView1;
+    ImageView imageView, imageView1;
     public String date2 = "";
 
     @Override
@@ -79,6 +80,8 @@ public class ReviewFragment extends Fragment implements SelectListener {
         firestore = FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
 
+        imageView=view.findViewById(R.id.imageView5);
+        imageView1=view.findViewById(R.id.imageView4);
         orderuser = new ArrayList<>();
         orderuser.clear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -148,9 +151,15 @@ public class ReviewFragment extends Fragment implements SelectListener {
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
                 CustomAdapterAdmin2 customAdapterAdmin = new CustomAdapterAdmin2(getContext(), orderuser, ReviewFragment.this, getActivity());
                 recyclerView12.setAdapter(customAdapterAdmin);
+                if(orderuser.size()==0)
+                {
+                    imageView.setVisibility(View.VISIBLE);
+                    imageView1.setVisibility(View.VISIBLE);
+                }
             }
         };
         mHandler2.postDelayed(mRunnable2, 3 * 1000);//Execute after 10 Seconds
+
 
 
         return view;
@@ -176,8 +185,7 @@ public class ReviewFragment extends Fragment implements SelectListener {
                         == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
                     sendSMS1();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
+
                 } else  // מבקש אישור לשליחת sms
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
             }
@@ -185,8 +193,7 @@ public class ReviewFragment extends Fragment implements SelectListener {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+
 
             }
         });

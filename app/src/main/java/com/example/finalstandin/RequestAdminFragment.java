@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,16 +64,20 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
     StorageReference storageReference;
     String address, address2 = "", name = "", date, tol, oot, fos, thereason, phone, gender, time, how_much_time, birth, price, st;
     Bitmap bitmap, bitmap1;
+    ImageView imageView, imageView1;
 
     public static Node<picUser> node;
     public String date22, time22, address11, address22, name2, money2, tol2, oot2, fos2, thereason2, phone2, gender2, how_much_time2, birth2, tempdate, tempTime, tempaddress, tempthereason, tempdate1;
     public static String currentDate;
-
+    public  CustomAdapterAdmin customAdapterAdmin;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_request_admin, container, false);
+
+        imageView=view.findViewById(R.id.imageView6);
+        imageView1=view.findViewById(R.id.imageView7);
 
         firestore = FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
@@ -191,8 +196,13 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
             public void run() {
 
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-                CustomAdapterAdmin customAdapterAdmin = new CustomAdapterAdmin(getContext(), orderuser, RequestAdminFragment.this, getActivity());
+                 customAdapterAdmin = new CustomAdapterAdmin(getContext(), orderuser, RequestAdminFragment.this, getActivity());
                 recyclerView1.setAdapter(customAdapterAdmin);
+                if(orderuser.size()==0)
+                {
+                    imageView.setVisibility(View.VISIBLE);
+                    imageView1.setVisibility(View.VISIBLE);
+                }
             }
         };
         mHandler2.postDelayed(mRunnable2, 5 * 1000);//Execute after 10 Seconds
@@ -212,6 +222,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
         ImageView imageView1;
         Button yes, no, go;
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
+        Order order = new Order(""+address, ""+address2, ""+name, ""+date, ""+tol,""+ oot, ""+fos, ""+thereason,""+ phone,""+ gender, ""+time,""+ how_much_time,""+ birth,""+ price, image);
 
 
         AlertDialog.Builder tempBuilder = new AlertDialog.Builder(getContext());
@@ -296,8 +307,7 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
                                        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
                                                == PackageManager.PERMISSION_GRANTED) {
                                            sendSMS1();
-                                           Intent intent = new Intent(getActivity(), MainActivity2.class);
-                                           startActivity(intent);
+
                                        } else  // מבקש אישור לשליחת sms
                                            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
 
@@ -333,8 +343,19 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
 
                                        // the action
                                        i.setAction(Intent.ACTION_EDIT);
-
                                        startActivity(i);
+
+
+                                       orderuser.remove(order);
+
+                                       customAdapterAdmin.notifyDataSetChanged();
+                                       tempAd.dismiss();
+//                                       Fragment frg = new RequestAdminFragment();
+//                                       //frg = getFragmentManager().findFragmentByTag(""+new RequestAdminFragment().getTag());
+//                                       final FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                                       ft.detach(frg);
+//                                       ft.attach(frg);
+//                                       ft.commit();
                                    }
                                }
 
@@ -346,8 +367,6 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
                 if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
                         == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
-                    Intent intent = new Intent(getActivity(), MainActivity2.class);
-                    startActivity(intent);
                     //  Toast.makeText(getActivity(), "a", Toast.LENGTH_SHORT).show();
                 } else  // מבקש אישור לשליחת sms
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
@@ -355,6 +374,18 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
                         .document(" " + date).delete();
+                tempAd.dismiss();
+
+                orderuser.remove(order);
+
+                customAdapterAdmin.notifyDataSetChanged();
+//                Fragment frg = null;
+//                frg = getFragmentManager().findFragmentByTag(""+new RequestAdminFragment().getTag());
+//                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(frg);
+//                ft.attach(frg);
+//                ft.commit();
+
             }
 
         });

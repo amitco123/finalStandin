@@ -66,12 +66,17 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
     public static Node<picUser> nod2;
     public String date22, time22, address11, address22, name2, money2, tol2, oot2, fos2, thereason2, phone2, gender2, how_much_time2, birth2;
 
+    ImageView imageView, imageView1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_approved_admin, container, false);
+
+
+        imageView=view.findViewById(R.id.imageView10);
+        imageView1=view.findViewById(R.id.imageView11);
 
         firestore = FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Calendar");
@@ -192,6 +197,11 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                 // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
                 CustomAdapterAdminForApproved customAdapterAdmin = new CustomAdapterAdminForApproved(getContext(), orderuser, ApprovedAdminFragment.this, getActivity());
                 recyclerView1.setAdapter(customAdapterAdmin);
+                if(orderuser.size()==0)
+                {
+                    imageView.setVisibility(View.VISIBLE);
+                    imageView1.setVisibility(View.VISIBLE);
+                }
             }
         };
         mHandler2.postDelayed(mRunnable2, 5 * 1000);//Execute after 10 Seconds
@@ -293,6 +303,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
                         .document(" " + date).delete();
+                tempAd.dismiss();
                 //Toast.makeText(getActivity(), ""+phone2, Toast.LENGTH_LONG).show();
 
             }
