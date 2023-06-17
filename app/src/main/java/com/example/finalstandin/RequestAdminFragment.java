@@ -351,35 +351,11 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
 
                                        orderuser.remove(order1);
                                        //orderuser.clear();
+                                       tempAd.dismiss();
                                        Intent intent = new Intent(getActivity(), MainActivity2.class);
                                        startActivity(intent);
 
-//                                       Runnable mRunnable2;
-//                                       Handler mHandler2 = new Handler();
-////        orderuser.remove(a);
-//                                       mRunnable2 = new Runnable() {
-//                                           @Override
-//                                           public void run() {
-//
-//                                               // Toast.makeText(getContext()," "+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-//                                               customAdapterAdmin = new CustomAdapterAdmin(getContext(), orderuser, RequestAdminFragment.this, getActivity());
-//                                               recyclerView1.setAdapter(customAdapterAdmin);
-//                                               if(orderuser.size()==0)
-//                                               {
-//                                                   imageView.setVisibility(View.VISIBLE);
-//                                                   imageView1.setVisibility(View.VISIBLE);
-//                                               }
-//                                           }
-//                                       };
-//                                       mHandler2.postDelayed(mRunnable2, 5 * 1000);//Execute after 10 Seconds
-                                       tempAd.dismiss();
-                                       //tempAd.dismiss();
-//                                       Fragment frg = new RequestAdminFragment();
-//                                       //frg = getFragmentManager().findFragmentByTag(""+new RequestAdminFragment().getTag());
-//                                       final FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                                       ft.detach(frg);
-//                                       ft.attach(frg);
-//                                       ft.commit();
+
                                    }
                                }
 
@@ -402,20 +378,11 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
                 tempAd.dismiss();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
-
-
-//                Fragment frg = null;
-//                frg = getFragmentManager().findFragmentByTag(""+new RequestAdminFragment().getTag());
-//                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.detach(frg);
-//                ft.attach(frg);
-//                ft.commit();
-
             }
 
         });
 
-        customAdapterAdmin.notifyDataSetChanged();
+
 
     }
 

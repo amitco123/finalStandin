@@ -401,10 +401,9 @@
             android:layout_marginStart="150dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="150dp"
-
             android:layout_marginBottom="5dp"
             android:onClick="gopay"
-            android:text="go pay"
+            android:text="order"
             android:textSize="12dp" />
 
     </RelativeLayout>

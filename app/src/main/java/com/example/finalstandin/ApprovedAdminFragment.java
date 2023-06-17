@@ -161,15 +161,9 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                                             }
                                             Order order = new Order(address, address2, name2, tempdate, tol, oot, fos, thereason, phone1, gender, time, how_much_time, birth, price, null);
                                             orderuser.add(order);
-//                                            Toast.makeText(getContext(), gender  , Toast.LENGTH_SHORT).show();
-//                                            Toast.makeText(getContext()," a"+  orderuser.toString() , Toast.LENGTH_SHORT).show();
-
-
-                                            //Toast.makeText(getContext(),orderuser.toString() , Toast.LENGTH_SHORT).show();
                                             // Log the address
                                             Log.d("FirestoreData", "Address: " + address);
                                         } else {
-                                            //Toast.makeText(getContext(), "dos", Toast.LENGTH_SHORT).show();
                                             Log.d("FirestoreData", "Document does not exist");
                                         }
                                     }
@@ -189,7 +183,6 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
         });
         Runnable mRunnable2;
         Handler mHandler2 = new Handler();
-//        orderuser.remove(a);
         mRunnable2 = new Runnable() {
             @Override
             public void run() {
@@ -294,19 +287,17 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                 if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
                         == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
-                    Intent intent = new Intent(getActivity(), MainActivity2.class);
-                    startActivity(intent);
+                    //  Toast.makeText(getActivity(), "a", Toast.LENGTH_SHORT).show();
                 } else  // מבקש אישור לשליחת sms
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
                 databaseReference.child(date).removeValue();
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
                         .document(" " + date).delete();
-                Intent intent = new Intent(getActivity(), MainActivity2.class);
-                startActivity(intent);
-                tempAd.dismiss();
-                //Toast.makeText(getActivity(), ""+phone2, Toast.LENGTH_LONG).show();
 
+                tempAd.dismiss();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -314,7 +305,7 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
 
     private void sendSMS() {
         String phone = phone2;
-        String message = "היי סליחה אך בסוף ממלא המקום אינו יכול להגיע לפגישה בתאריך" + " " + date22 + " " + "סליחה ויום טוב.";
+        String message = "היי סליחה אך בסוף ממלא המקום אינו יכול בתאריך" + " " + date22 + " ";
 
         if (!phone.isEmpty() && !message.isEmpty()) // בודק האם השדות ריקים
         {

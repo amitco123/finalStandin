@@ -93,7 +93,6 @@ public class CustomAdapterAdminForApproved extends RecyclerView.Adapter<CustomAd
 
     @Override
     public int getItemCount() {
-        //Toast.makeText(context,"" + orders.size(), Toast.LENGTH_SHORT).show();
         return orders.size();
     }
 

@@ -80,7 +80,6 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
                         Birth = orders.get(holder.getAdapterPosition()).getBirth();
                         bitmap = RequestAdminFragment.getBitmapFromName("" + Phone);
                         listener.onClick(Date, Time, Address, Adress2, Name, Price, Tol, Oot, Fos, Thereason, Phone, Gender, How_much_time, Birth, bitmap);
-                        //Toast.makeText(context, ", "+Date , Toast.LENGTH_LONG).show();
 
 
                     }
@@ -91,7 +90,6 @@ public class CustomAdapterAdmin extends RecyclerView.Adapter<CustomAdapterAdmin.
 
     @Override
     public int getItemCount() {
-        //Toast.makeText(context,"" + orders.size(), Toast.LENGTH_SHORT).show();
         return orders.size();
     }
 
