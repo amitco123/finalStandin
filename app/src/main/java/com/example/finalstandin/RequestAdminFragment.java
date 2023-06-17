@@ -351,8 +351,8 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
 
                                        orderuser.remove(order1);
                                        //orderuser.clear();
-
-                                       Toast.makeText(getContext(), "a", Toast.LENGTH_SHORT).show();
+                                       Intent intent = new Intent(getActivity(), MainActivity2.class);
+                                       startActivity(intent);
 
 //                                       Runnable mRunnable2;
 //                                       Handler mHandler2 = new Handler();
@@ -398,11 +398,11 @@ public class RequestAdminFragment extends Fragment implements SelectListener {
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
                         .document(" " + date).delete();
+
                 tempAd.dismiss();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
 
-                orderuser.remove(order1);
-
-                customAdapterAdmin.notifyDataSetChanged();
 
 //                Fragment frg = null;
 //                frg = getFragmentManager().findFragmentByTag(""+new RequestAdminFragment().getTag());

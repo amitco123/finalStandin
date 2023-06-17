@@ -302,6 +302,8 @@ public class ApprovedAdminFragment extends Fragment implements SelectListener {
                 firestore.collection("Users")
                         .document(phone).collection("Orders")
                         .document(" " + date).delete();
+                Intent intent = new Intent(getActivity(), MainActivity2.class);
+                startActivity(intent);
                 tempAd.dismiss();
                 //Toast.makeText(getActivity(), ""+phone2, Toast.LENGTH_LONG).show();
 

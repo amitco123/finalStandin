@@ -192,7 +192,8 @@ public class ReviewFragment extends Fragment implements SelectListener {
                         == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
                     sendSMS1();
-
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
                 } else  // מבקש אישור לשליחת sms
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
             }
@@ -201,7 +202,8 @@ public class ReviewFragment extends Fragment implements SelectListener {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
         builder.create().show();

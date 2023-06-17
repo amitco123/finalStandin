@@ -175,8 +175,8 @@ public class HomeFragment extends Fragment implements SelectListener {
                 if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
                         == PackageManager.PERMISSION_GRANTED) {
                     sendSMS();
-//                    Intent intent = new Intent(getActivity(), MainActivity.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
                 } else  // מבקש אישור לשליחת sms
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 100);
 
@@ -187,6 +187,8 @@ public class HomeFragment extends Fragment implements SelectListener {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
         builder.create().show();

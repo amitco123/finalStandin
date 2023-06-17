@@ -226,7 +226,7 @@ public class Login extends AppCompatActivity {
                     } else {
                         //user is exists, just do login
                         if (user.getPhoneNumber().equals("+972522094340")) {
-                            Intent intent1 = new Intent(Login.this, MainActivity2.class);
+                            Intent intent1 = new Intent(Login.this, MainActivity.class);
                             startActivity(intent1);
                         }
                         else {
@@ -259,10 +259,10 @@ public class Login extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             if (currentUser.getPhoneNumber().equals("+972522094340")) {
-                Intent intent = new Intent(Login.this, MainActivity2.class);
+                Intent intent = new Intent(Login.this, MainActivity.class);
                 startActivity(intent);
             } else {
-                Intent intent = new Intent(Login.this, MainActivity2.class);
+                Intent intent = new Intent(Login.this, MainActivity.class);
 
                 intent.putExtra("User", currentUser.getPhoneNumber());
                 user1 = currentUser.getPhoneNumber();
